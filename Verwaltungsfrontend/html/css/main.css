@@ -1,7 +1,7 @@
 .visual {
   border-style: dashed;
   margin-right: 1.5em;
-  flex-grow: 2;
+  flex-grow: 1;
 
   padding: 1em;
 }
@@ -12,4 +12,9 @@
   flex-grow: 1;
 
   padding: 1em;
+}
+
+#mp {
+  height: 45em;
+  width: 80em;
 }

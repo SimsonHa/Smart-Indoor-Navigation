@@ -14,10 +14,10 @@
   <main>
     <div class="visual">
       <p>Marktplan zum Hochladen auswählen.</p>
-      <input type="file" id="file" name="datei"/>
-      <output id="marktplan">
 
-      </output>
+      <input type="file" onchange="previewFile()"/><br>
+      <img id="mp" src"" alt="Markplan preview" />
+
     </div>
     <div class="editform">
       ...and some further here!
@@ -28,6 +28,8 @@
   <footer>
     © Smart Indoor Navigation  2019 <br>Tabea Stolzmann, Henry Rogner, Manuel Kastel, Simon Hannappel
   </footer>
+
+  <script src="js/fileupload.js"></script>
 
   </body>
 </html>
