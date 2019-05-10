@@ -47,9 +47,11 @@ main {
 
   padding-top: 1em;
   padding-left: 2em;
+  padding-right: 2em;
   padding-bottom: 1em;
 
   display: inline-flex;
+  flex-direction: row;
 
   flex: 1 0 auto;
 }

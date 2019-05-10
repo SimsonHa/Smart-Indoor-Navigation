@@ -1,7 +1,11 @@
 .visual {
-  color: red;
+  background-color: white;
+  margin-right: 1.5em;
+  flex-grow: 2;
 }
 
 .editform {
-  color: yellow;
+  background-color: white;
+  margin-left: 1.5;
+  flex-grow: 1;
 }
