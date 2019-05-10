@@ -1,11 +1,15 @@
 .visual {
-  background-color: white;
+  border-style: dashed;
   margin-right: 1.5em;
   flex-grow: 2;
+
+  padding: 1em;
 }
 
 .editform {
-  background-color: white;
+  border-style: dashed;
   margin-left: 1.5;
   flex-grow: 1;
+
+  padding: 1em;
 }

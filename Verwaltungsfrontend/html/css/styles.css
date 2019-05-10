@@ -6,27 +6,23 @@ html {
   background-repeat: no-repeat;
   background-size: cover;
   background-position: bottom left;
+  background-attachment: fixed;
   font-family: Verdana;
-  font-size: 1.2em;
   color: lightgray;
-  padding-bottom: 0;
-
+  padding: 0;
 }
 
 body {
-  height: 90%;
+  height: 95%;
   padding-left: 3em;
   padding-right: 3em;
-  padding-top: 3em;
-  padding-bottom: 0em;
 
   display: flex;
   flex-direction: column;
 }
 
 h1 {
-  margin-left: 0;
-  margin-bottom: .5em;
+  margin: 0;
 }
 
 h2 {
@@ -47,11 +43,10 @@ main {
 
   padding-top: 1em;
   padding-left: 2em;
-  padding-right: 2em;
   padding-bottom: 1em;
+  padding-right: 1em;
 
   display: inline-flex;
-  flex-direction: row;
 
   flex: 1 0 auto;
 }
