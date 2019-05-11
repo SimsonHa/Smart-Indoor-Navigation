@@ -12,13 +12,16 @@
     </header>
 
   <main>
+    <!--
     <div class="visual">
       <p>Marktplan zum Hochladen auswählen.</p>
-
       <input type="file" onchange="previewFile()"/><br>
       <img id="mp" src"" alt="Markplan preview" />
-
-    </div>
+    -->
+      <canvas id="mp">
+        <p>Your browser doesn't support canvas. Boo hoo!</p>
+      </canvas>
+    <!--</div>-->
     <div class="editform">
       ...and some further here!
       <br> (Produktverwaltung + Suche)
@@ -29,7 +32,8 @@
     © Smart Indoor Navigation  2019 <br>Tabea Stolzmann, Henry Rogner, Manuel Kastel, Simon Hannappel
   </footer>
 
-  <script src="js/fileupload.js"></script>
+      <!--<script src="js/fileupload.js"></script>-->
+  <script src="js/drawCanvas.js"></script>
 
   </body>
 </html>

@@ -1,9 +1,21 @@
+/***
 .visual {
   border-style: dashed;
   margin-right: 1.5em;
   flex-grow: 1;
 
   padding: 1em;
+}
+***/
+
+canvas {
+  width: 300px;
+  height: 300px;
+  border-style: dashed;
+  margin-right: 1.5em;
+  flex-grow: 1;
+  padding: 1em;
+  background-color: white;
 }
 
 .editform {
@@ -12,9 +24,4 @@
   flex-grow: 1;
 
   padding: 1em;
-}
-
-#mp {
-  height: 45em;
-  width: 80em;
 }
