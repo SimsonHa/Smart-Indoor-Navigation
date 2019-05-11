@@ -2,10 +2,15 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <title></title>
+    <title>Canvas</title>
+    <link rel="stylesheet" href="css/canvas.css" />
   </head>
   <body>
-      <canvas id="mp" width="300" height="300"></canvas>
-      <script src="js/drawCanvas.js"></script>
+    <p>Marktplan zum Hochladen auswählen.</p>
+    <input type="file" onchange="previewFile()"/><br>
+    <img id="mpX" alt="Markplan preview" />
+    <canvas id="mp" width="100%" height="100%"></canvas>
+    <script src="js/drawCanvas.js"></script>
+    <script src="js/fileupload.js"></script>
   </body>
 </html>

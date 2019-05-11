@@ -1,4 +1,4 @@
-/***
+
 .visual {
   border-style: dashed;
   margin-right: 1.5em;
@@ -6,9 +6,8 @@
 
   padding: 1em;
 }
-***/
 
-canvas {
+/* canvas {
   width: 300px;
   height: 300px;
   border-style: dashed;
@@ -16,7 +15,7 @@ canvas {
   flex-grow: 1;
   padding: 1em;
   background-color: white;
-}
+} */
 
 .editform {
   border-style: dashed;

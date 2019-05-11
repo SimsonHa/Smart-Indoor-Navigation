@@ -4,7 +4,11 @@ function previewFile(){
        var reader  = new FileReader();
 
        reader.onloadend = function () {
-           preview.src = reader.result;
+           //preview.src = reader.result;
+
+          var img = new Image();
+          img.src = reader.result;
+          ctx.drawImage(img, 0, 0);
        }
 
        if (file) {

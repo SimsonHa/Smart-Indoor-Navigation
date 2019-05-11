@@ -6,27 +6,35 @@ var ctx = canvas.getContext('2d');
 var curX;
 var curY;
 
-var lastClickedX;
-var lastClickedY;
+var vectors = [];
 
 var pressed = false;
 
-document.onmousemove = function(e) {
+// document.onmousemove = function(e) {
+//   curX = (window.Event) ? e.pageX : e.clientX + (document.documentElement.scrollLeft ? document.documentElement.scrollLeft : document.body.scrollLeft);
+//   curY = (window.Event) ? e.pageY : e.clientY + (document.documentElement.scrollTop ? document.documentElement.scrollTop : document.body.scrollTop);
+// }
+
+canvas.onmousedown = function(e) {
   curX = (window.Event) ? e.pageX : e.clientX + (document.documentElement.scrollLeft ? document.documentElement.scrollLeft : document.body.scrollLeft);
   curY = (window.Event) ? e.pageY : e.clientY + (document.documentElement.scrollTop ? document.documentElement.scrollTop : document.body.scrollTop);
-}
-
-canvas.onmousedown = function() {
-  lastClickedX = curX;
-  lastClickedY = curY;
+  vectors.push(vec = {x : curX, y : curY});
+  draw();
 };
 
 function draw() {
-  if(lastClickedX != null && lastClickedY != null) {
-    ctx.beginPath();
-    ctx.moveTo(lastClickedX, lastClickedY);
-    ctx.lineTo(curX, curY);
-    ctx.stroke();
+  if(vectors.length > 1){
+    for(var i = 0; i < vectors.length-1; i++) {
+      ctx.beginPath();
+      ctx.fillStyle = "red";
+      ctx.arc(vectors[i].x, vectors[i].y, 5, 0, 2 * Math.PI);
+      ctx.fill();
+      ctx.stroke();
+      ctx.fillStyle = "black";
+      ctx.moveTo(vectors[i].x, vectors[i].y);
+      ctx.lineTo(vectors[i+1].x, vectors[i+1].y);
+      ctx.stroke();
+    }
   }
   requestAnimationFrame(draw);
 }
