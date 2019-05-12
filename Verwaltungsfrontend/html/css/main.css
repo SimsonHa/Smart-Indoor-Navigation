@@ -1,3 +1,4 @@
+/* CSS for "Verwaltungsfrontend" main-Section containing the Visual-Editor + Data-Manager */
 
 .visual {
   border-style: dashed;
@@ -6,16 +7,6 @@
 
   padding: 1em;
 }
-
-/* canvas {
-  width: 300px;
-  height: 300px;
-  border-style: dashed;
-  margin-right: 1.5em;
-  flex-grow: 1;
-  padding: 1em;
-  background-color: white;
-} */
 
 .editform {
   border-style: dashed;
