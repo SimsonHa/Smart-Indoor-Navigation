@@ -15,17 +15,31 @@
 //     tImg.src = "";
 //   }
 // }
-var initialized = false;
 
+// stage (top node which contains layers)
 var stage;
 
+//layers bgLayer = background image, pathLayer = waypoints and connections, eslLayer = esl shapes
 var bgLayer = new Konva.Layer();
-var pathLayer = new Konva.Layer();
-var eslLayer = new Konva.Layer();
 
+
+var pathLayer = new Konva.Layer();
+var waypoints = [];
+
+var labelLayer = new Konva.Layer();
+var labels = [];
+
+//load bg-image first and create a stage with the images dimension afterwards -> perfect size + resolution
 var img = new Image();
 var bgImg;
 
+//other
+var lastSelected;
+
+//image resource, later changed to uploaded image
+img.src = 'js/test.JPG';
+
+//fires when the image is uploaded successfull
 img.onload = function() {
   console.log("Loaded");
   bgImg = new Konva.Image({
@@ -45,7 +59,7 @@ img.onload = function() {
     stage.container().style.cursor = 'default';
   });
 
-  //initalize Stage with bg size
+  //initalize Stage with bg-image-size
   stage = new Konva.Stage({
     container: 'container',
     width: img.width,
@@ -53,29 +67,52 @@ img.onload = function() {
     draggable: true
   });
 
+  //add shapes on click
   stage.on('click', function(e) {
+    //transform coordinates (changed by zoom + drag)
     var transform = bgImg
       .getParent()
       .getAbsoluteTransform()
       .copy();
 
-    // to detect relative position we need to invert transform
     transform.invert();
     var pos = stage.getPointerPosition();
     var circlePos = transform.point(pos);
 
-    var circle = new Konva.Circle({
-      x: circlePos.x,
-      y: circlePos.y,
-      radius: 3,
-      fill: 'red',
-      stroke: 'black',
-      strokeWidth: 1,
-      draggable: true
-    });
-    pathLayer.add(circle);
-      pathLayer.draw();
+    // switch for mode
+    if(document.getElementById("waypointRadio").checked == true) {
+      waypoints.push(new Waypoint(new Konva.Circle({
+        x: circlePos.x,
+        y: circlePos.y,
+        radius: 4,
+        fill: 'red',
+        stroke: 'black',
+        strokeWidth: 1,
+        draggable: true
+      })));
+    };
+
+    if(document.getElementById("pathRadio").checked == true) {
+
+    };
+
+    if(document.getElementById("labelRadio").checked == true) {
+      labels.push(new Label(new Konva.Rect({
+        x: circlePos.x,
+        y: circlePos.y,
+        width: 3,
+        height: 2,
+        fill: 'blue',
+        draggable: true
+      })));
+    };
+    // end of mode switch
+
+    pathLayer.draw();
+    labelLayer.draw();
   });
+
+    //add circle (later switch for waypoints or esl)
 
   // zoom scale
   var scaleBy = 1.2;
@@ -109,11 +146,7 @@ img.onload = function() {
   //end of zoom
 
 
-
+  //drawing and adding layers to the stage (top node)
   bgLayer.draw();
-  stage.add(bgLayer, pathLayer);
-
-  initialized = true;
+  stage.add(bgLayer, pathLayer, labelLayer);
 }
-
-img.src = 'js/test.JPG';
