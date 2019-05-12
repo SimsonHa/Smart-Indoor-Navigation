@@ -1,0 +1,17 @@
+/* CSS for "Verwaltungsfrontend" main-Section containing the Visual-Editor + Data-Manager */
+
+.visual {
+  border-style: dashed;
+  margin-right: 1.5em;
+  flex-grow: 1;
+
+  padding: 1em;
+}
+
+.editform {
+  border-style: dashed;
+  margin-left: 1.5;
+  flex-grow: 1;
+
+  padding: 1em;
+}
