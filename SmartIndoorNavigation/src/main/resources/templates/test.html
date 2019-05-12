@@ -3,8 +3,16 @@
 <head>
     <title>Getting Started: Serving Web Content</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+   <!--  <link rel="stylesheet" th:href="@{/css/styles.css}" href="css/styles.css" />
+    <link rel="stylesheet" th:href="@{/css/main.css}"href="css/main.css" />-->
+    
 </head>
 <body>
-    <p th:text="'Hello, ' + ${name} + '!'" />
+    <table>
+    <tr><th>Produkt</th><th>Preis</th><th>ArtikelNr</th></tr>
+    <tr th:each="product: ${products}">
+    <td th:text="${product.name}"></td><td th:text="${product.price}"></td><td th:text="${product.artNr}"></td>
+    </tr>
+    </table>
 </body>
 </html>
