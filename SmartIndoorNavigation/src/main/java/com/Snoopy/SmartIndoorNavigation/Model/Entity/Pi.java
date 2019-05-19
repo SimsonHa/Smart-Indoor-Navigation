@@ -15,7 +15,7 @@ public class Pi {
 	private boolean status;
 	
 	@NotNull
-	private String macAdres;
+	private String macAdress;
 	
 	
 	public Pi() {
@@ -23,20 +23,20 @@ public class Pi {
 	}
 
 
-	public Pi(String macAdres) {
+	public Pi(String macAdress) {
 		super();
-		this.macAdres = macAdres;
+		this.macAdress = macAdress;
 		this.status = false;
 	}
 
 
-	public boolean isStatus() {
+	public boolean getStatus() {
 		return status;
 	}
 
 
 	public String getMacAdres() {
-		return macAdres;
+		return macAdress;
 	}
 
 
@@ -46,7 +46,7 @@ public class Pi {
 
 
 	public void setMacAdres(String macAdres) {
-		this.macAdres = macAdres;
+		this.macAdress = macAdress;
 	}
 	
 	

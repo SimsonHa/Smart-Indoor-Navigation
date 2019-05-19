@@ -3,6 +3,7 @@ package com.Snoopy.SmartIndoorNavigation.Model.Entity;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 
@@ -24,10 +25,19 @@ public class ESL {
 	@OneToOne
 	private Pi pi;
 	
+	@ManyToOne
+	private Grundriss grundriss;
+	
 	public ESL() {
 		
 	}
 	
+	public ESL(double posX, double posY, Grundriss grundriss) {
+		super();
+		this.posX = posX;
+		this.posY = posY;
+		this.grundriss = grundriss;
+	}
 	public ESL(double posX, double posY) {
 		super();
 		this.posX = posX;

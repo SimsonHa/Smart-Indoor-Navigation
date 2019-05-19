@@ -21,7 +21,7 @@ public class Grundriss {
 	@GeneratedValue
 	private Long id;
 	
-	private byte[] image;
+	private int[] bild;
 	
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
 	@LazyCollection(LazyCollectionOption.FALSE)
@@ -36,14 +36,14 @@ public class Grundriss {
 		
 	}
 	
-	public Grundriss(byte[] image) {
+	public Grundriss(int[] bild) {
 		super();
-		this.image = image;
+		this.bild = bild;
 	}
 
 
-	public byte[] getImage() { 
-		return image;
+	public int[] getBild() { 
+		return bild;
 	}
 
 
@@ -57,8 +57,8 @@ public class Grundriss {
 	}
 
 
-	public void setImage(byte[] image) {
-		this.image = image;
+	public void setBild(int[] bild) {
+		this.bild = bild;
 	}
 }
 	

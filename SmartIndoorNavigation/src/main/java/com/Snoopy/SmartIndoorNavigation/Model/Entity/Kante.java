@@ -8,6 +8,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.Max;
 
 @Entity
@@ -21,9 +22,37 @@ public class Kante {
 	@ManyToMany(fetch = FetchType.EAGER)
 	private List<Wegpunkt> wegpunkte = new ArrayList<>();
 	
-	public Kante(Wegpunkt wegpunkt1, Wegpunkt wegpunkt2) {
-		this.wegpunkte.add(wegpunkt1);
-		this.wegpunkte.add(wegpunkt2);
+	@ManyToOne
+	private Grundriss grundriss;
+	
+	
+	public Kante() {
+		
+	}
+	
+	public Kante(List<Wegpunkt> wegpunkte) {
+		this.wegpunkte = wegpunkte;
+	}
+	public Kante(List<Wegpunkt> wegpunkte, Grundriss grundriss) {
+		this.wegpunkte = wegpunkte;
+		this.grundriss = grundriss;
 	}
 
+	public List<Wegpunkt> getWegpunkte() {
+		return wegpunkte;
+	}
+
+	public Grundriss getGrundriss() {
+		return grundriss;
+	}
+
+	public void setWegpunkte(List<Wegpunkt> wegpunkte) {
+		this.wegpunkte = wegpunkte;
+	}
+
+	public void setGrundriss(Grundriss grundriss) {
+		this.grundriss = grundriss;
+	}
+	
+	
 }
