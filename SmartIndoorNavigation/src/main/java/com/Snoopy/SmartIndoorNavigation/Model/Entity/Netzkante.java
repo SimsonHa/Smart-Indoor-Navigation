@@ -8,43 +8,33 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.validation.constraints.Max;
 
 @Entity
-public class Kante {
-	
+public class Netzkante {
+
 	@Id
 	@GeneratedValue
 	private Long id;
 	
 	//@Max(value = 2, message = "Maximal 2 Wegpunkte pro Kante")
 	@ManyToMany(fetch = FetchType.EAGER)
-	private List<Wegpunkt> wegpunkte = new ArrayList<>();
+	private List<Netzpunkt> netzPunkte = new ArrayList<>();
 	
-	//@ManyToOne
-	//private Grundriss grundriss;
-	
-	
-	public Kante() {
+	public Netzkante() {
 		
 	}
+	public Netzkante(List<Netzpunkt> netzPunkte) {
+		super();
+		this.netzPunkte = netzPunkte;
+	}
+	public List<Netzpunkt> getNetzPunkte() {
+		return netzPunkte;
+	}
+	public void setNetzPunkte(List<Netzpunkt> netzPunkte) {
+		this.netzPunkte = netzPunkte;
+	}
 	
-	public Kante(List<Wegpunkt> wegpunkte) {
-		this.wegpunkte = wegpunkte;
-	}
-
-
-	public List<Wegpunkt> getWegpunkte() {
-		return wegpunkte;
-	}
-
-
-
-	public void setWegpunkte(List<Wegpunkt> wegpunkte) {
-		this.wegpunkte = wegpunkte;
-	}
-
-
+	
+	
 	
 }

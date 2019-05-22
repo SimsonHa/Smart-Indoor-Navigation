@@ -23,12 +23,12 @@ public class Grundriss {
 	
 	private int[] bild;
 	
-	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval=true)
 	@LazyCollection(LazyCollectionOption.FALSE)
 	private List<ESL> esls = new ArrayList<>();
 	
 	
-	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval=true)
 	@LazyCollection(LazyCollectionOption.FALSE)
 	private List<Kante> kanten = new ArrayList<>();
 
@@ -60,6 +60,23 @@ public class Grundriss {
 	public void setBild(int[] bild) {
 		this.bild = bild;
 	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setEsls(List<ESL> esls) {
+		this.esls = esls;
+	}
+
+	public void setKanten(List<Kante> kanten) {
+		this.kanten = kanten;
+	}
+	
+	
+
+	
+	
 }
 	
 	

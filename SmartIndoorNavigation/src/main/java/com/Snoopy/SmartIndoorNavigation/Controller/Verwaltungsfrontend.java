@@ -2,9 +2,12 @@ package com.Snoopy.SmartIndoorNavigation.Controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -22,16 +25,21 @@ import com.Snoopy.SmartIndoorNavigation.Model.Entity.Artikel;
 import com.Snoopy.SmartIndoorNavigation.Model.Entity.ESL;
 import com.Snoopy.SmartIndoorNavigation.Model.Entity.Grundriss;
 import com.Snoopy.SmartIndoorNavigation.Model.Entity.Kante;
+import com.Snoopy.SmartIndoorNavigation.Model.Entity.Netzkante;
 import com.Snoopy.SmartIndoorNavigation.Model.Entity.Pi;
 import com.Snoopy.SmartIndoorNavigation.Model.Entity.Wegpunkt;
 import com.Snoopy.SmartIndoorNavigation.Model.Repository.ArtikelRepository;
 import com.Snoopy.SmartIndoorNavigation.Model.Repository.ESLRepository;
 import com.Snoopy.SmartIndoorNavigation.Model.Repository.GrundrissRepository;
 import com.Snoopy.SmartIndoorNavigation.Model.Repository.KanteRepository;
+import com.Snoopy.SmartIndoorNavigation.Model.Repository.NetzkanteRepository;
 import com.Snoopy.SmartIndoorNavigation.Model.Repository.PiRepository;
 import com.Snoopy.SmartIndoorNavigation.Model.Repository.WegpunktRepository;
 
+import Logic.Netz;
 import Logic.Wrapper;
+
+//@ComponentScan({"com.Snoopy.SmartIndoorNavigation.Logic"})
 
 @RestController
 public class Verwaltungsfrontend {
@@ -48,7 +56,11 @@ public class Verwaltungsfrontend {
 	GrundrissRepository repository5;
 	@Autowired
 	KanteRepository repository6;
+	@Autowired
+	NetzkanteRepository repository7;
 	
+	@Autowired
+	Netz service;
 	
 	
 	    @GetMapping("/artikel")
@@ -95,31 +107,55 @@ public class Verwaltungsfrontend {
 	    
 	    @PostMapping("netz")
 	    public Grundriss netz(@RequestBody Wrapper wrapper) {
-	    	repository5.save(wrapper.getGrundriss());
+	    	
 	    	
 	    	int sizeESL = wrapper.getEsls().size();
+	    	
+	    	List<ESL> eslList = new ArrayList<ESL>();
 	    	for(int j = 0; j<sizeESL; j++) {
 	    		ESL e = new ESL(wrapper.getEsls().get(j).getPosX(), wrapper.getEsls().get(j).getPosY(), wrapper.getGrundriss());
 	    		repository3.save(e);
+	    		eslList.add(e);
 	    	}
+	    	Grundriss gr = wrapper.getGrundriss();
+	    	gr.setEsls(eslList);
 	    	
+	    	
+	    	List<Kante> kanteList = new ArrayList<Kante>();
 	    	int sizeKT = wrapper.getKanten().size();
 	    	for(int i = 0; i<sizeKT; i++) {
-	    		/*Wegpunkt wp1= wrapper.getKanten().get(i).getWegpunkte().get(0);
+	    		Wegpunkt wp1= wrapper.getKanten().get(i).getWegpunkte().get(0);
 	    		Wegpunkt wp2 = wrapper.getKanten().get(i).getWegpunkte().get(1);
 	    		List<Wegpunkt> wpList = new ArrayList<Wegpunkt>();
 	    		wpList.add(wp1);
 	    		wpList.add(wp2);
 	    		repository4.save(wp1);
 	    		repository4.save(wp2);
-	    		*/
-	    		repository6.save(wrapper.getKanten().get(i));
+	    		
+	    		Kante k = new Kante(wpList);
+	    		repository6.save(k);
+	    		kanteList.add(k);
+	    		
 	    	}
 	    	
+	    	gr.setKanten(kanteList);
+	    	repository5.save(gr);
 	    	
-	    	return wrapper.getGrundriss();
+
+	    	return gr;
+	    }
+
+    	
+	    @GetMapping("/kante")
+	    public List<Netzkante> kante() {
+	    	 	
+	    	service.setEsls(repository3.findAll());
+	    	service.setKanten(repository6.findAll());
 	    	
-	    	
+	    	service.netzUpdate();
+	    	List<Netzkante> k = (List<Netzkante>) repository7.findAll();
+	        
+	    	return k;
 	    }
 }
 	    

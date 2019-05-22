@@ -25,8 +25,9 @@ public class ESL {
 	@OneToOne
 	private Pi pi;
 	
-	@ManyToOne
-	private Grundriss grundriss;
+	
+	//@ManyToOne
+	//private Grundriss grundriss;
 	
 	public ESL() {
 		
@@ -36,7 +37,7 @@ public class ESL {
 		super();
 		this.posX = posX;
 		this.posY = posY;
-		this.grundriss = grundriss;
+		//this.grundriss = grundriss;
 	}
 	public ESL(double posX, double posY) {
 		super();
