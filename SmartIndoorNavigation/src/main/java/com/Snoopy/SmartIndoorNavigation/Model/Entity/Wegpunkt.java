@@ -8,6 +8,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.Snoopy.SmartIndoorNavigation.Model.Repository.WegpunktRepository;
+
 @Entity
 public class Wegpunkt {
 
@@ -18,7 +22,10 @@ public class Wegpunkt {
 	private double posX;
 	private double posY;
 	
-
+	private boolean start;
+	
+	//@Autowired
+	//WegpunktRepository repoWegpunkt;
 	
 	public Wegpunkt() {
 		
@@ -28,6 +35,13 @@ public class Wegpunkt {
 		super();
 		this.posX = posX;
 		this.posY = posY;
+		//Ersten Wegpunkt markieren
+		/*if(repoWegpunkt.count()<=0) {
+			start = true;
+		}
+		else {
+			start = false;
+		}*/
 
 	}
 
@@ -45,6 +59,14 @@ public class Wegpunkt {
 
 	public void setPosY(double posY) {
 		this.posY = posY;
+	}
+
+	public boolean getStart() {
+		return start;
+	}
+
+	public void setStart(boolean start) {
+		this.start = start;
 	}
 	
 	

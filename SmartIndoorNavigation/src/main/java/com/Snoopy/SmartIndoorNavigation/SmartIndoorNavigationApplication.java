@@ -4,6 +4,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 
 import com.Snoopy.SmartIndoorNavigation.Model.Entity.Artikel;
 import com.Snoopy.SmartIndoorNavigation.Model.Entity.ESL;
@@ -40,17 +41,17 @@ public class SmartIndoorNavigationApplication {
 			repository3.save(new ESL(530.7, 333));
 			repository3.save(new ESL(1111, 1.1));
 			
-			Pi p1 =  new Pi("00:80:41:ae:fd:1e");
+			Pi p1 =  new Pi("000000003d1d1c36");
 			p1.setStatus(true);
-			Pi p2 = new Pi("00:80:41:ae:fd:2e");
+			Pi p2 = new Pi("000000003d1d1c66");
 			p2.setStatus(true);
-			Pi p3 = new Pi("00:80:41:ae:fd:3e");
+			Pi p3 = new Pi("000000003d1d1c21");
 			p3.setStatus(true);
 			
 			repository4.save(p1);
 			repository4.save(p2);
 			repository4.save(p3);
-			repository4.save(new Pi("00:80:41:ae:fd:4e"));
+			repository4.save(new Pi("000000003d1d1c78"));
 			
 			
 		};

@@ -1,4 +1,4 @@
-package Logic;
+package com.Snoopy.SmartIndoorNavigation.Logic;
 
 import java.util.List;
 

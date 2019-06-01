@@ -21,6 +21,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.Snoopy.SmartIndoorNavigation.Logic.Netz;
+import com.Snoopy.SmartIndoorNavigation.Logic.Wrapper;
+import com.Snoopy.SmartIndoorNavigation.MQTT.SubscribePi;
 import com.Snoopy.SmartIndoorNavigation.Model.Entity.Artikel;
 import com.Snoopy.SmartIndoorNavigation.Model.Entity.ESL;
 import com.Snoopy.SmartIndoorNavigation.Model.Entity.Grundriss;
@@ -35,9 +38,6 @@ import com.Snoopy.SmartIndoorNavigation.Model.Repository.KanteRepository;
 import com.Snoopy.SmartIndoorNavigation.Model.Repository.NetzkanteRepository;
 import com.Snoopy.SmartIndoorNavigation.Model.Repository.PiRepository;
 import com.Snoopy.SmartIndoorNavigation.Model.Repository.WegpunktRepository;
-
-import Logic.Netz;
-import Logic.Wrapper;
 
 //@ComponentScan({"com.Snoopy.SmartIndoorNavigation.Logic"})
 
@@ -60,7 +60,10 @@ public class Verwaltungsfrontend {
 	NetzkanteRepository repository7;
 	
 	@Autowired
-	Netz service;
+	Netz netzService;
+	
+	@Autowired
+	SubscribePi subscribeService;
 	
 	
 	    @GetMapping("/artikel")
@@ -92,6 +95,7 @@ public class Verwaltungsfrontend {
 	    
 	    //https://www.baeldung.com/spring-request-response-body
 	    //https://stackoverflow.com/questions/30511911/getting-not-supported-media-type-error
+	    
 	    @PostMapping("wegpunkt")
 	    public Wegpunkt wp(@RequestBody Wegpunkt wp) {
 	    	
@@ -140,7 +144,8 @@ public class Verwaltungsfrontend {
 	    	
 	    	gr.setKanten(kanteList);
 	    	repository5.save(gr);
-	    	
+	    
+	    	subscribeService.subscribe();
 
 	    	return gr;
 	    }
@@ -149,10 +154,10 @@ public class Verwaltungsfrontend {
 	    @GetMapping("/kante")
 	    public List<Netzkante> kante() {
 	    	 	
-	    	service.setEsls(repository3.findAll());
-	    	service.setKanten(repository6.findAll());
+	    	netzService.setEsls(repository3.findAll());
+	    	netzService.setKanten(repository6.findAll());
 	    	
-	    	service.netzUpdate();
+	    	netzService.netzUpdate();
 	    	List<Netzkante> k = (List<Netzkante>) repository7.findAll();
 	        
 	    	return k;

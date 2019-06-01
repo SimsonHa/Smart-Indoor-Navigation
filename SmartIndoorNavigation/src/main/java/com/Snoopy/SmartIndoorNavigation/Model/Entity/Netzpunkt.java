@@ -16,6 +16,8 @@ public class Netzpunkt {
 	private double posX;
 	private double posY;
 	
+	private boolean start;
+	
 	@OneToOne
 	Artikel artikel;
 	
@@ -23,10 +25,11 @@ public class Netzpunkt {
 		
 	}
 	
-	public Netzpunkt(double posX, double posY) {
+	public Netzpunkt(double posX, double posY, boolean start) {
 		super();
 		this.posX = posX;
 		this.posY = posY;
+		this.start = start;
 	}
 
 	public double getPosX() {
@@ -52,6 +55,16 @@ public class Netzpunkt {
 	public void setArtikel(Artikel artikel) {
 		this.artikel = artikel;
 	}
+
+	public boolean getStart() {
+		return start;
+	}
+
+	public void setStart(boolean start) {
+		this.start = start;
+	}
+	
+	
 	
 	
 	
