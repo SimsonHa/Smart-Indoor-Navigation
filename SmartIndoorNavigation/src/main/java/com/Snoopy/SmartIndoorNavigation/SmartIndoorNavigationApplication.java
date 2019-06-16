@@ -35,11 +35,11 @@ public class SmartIndoorNavigationApplication {
 			repository1.save(new Artikel("Kirsche", 4.1, "789", repository2.findByName("Obst")));
 			
 			
-			repository3.save(new ESL(15.5, 500.1));
-			repository3.save(new ESL(800.67, 300.6));
-			repository3.save(new ESL(100.67, 50.6));
-			repository3.save(new ESL(530.7, 333));
-			repository3.save(new ESL(1111, 1.1));
+			repository3.save(new ESL(3.42, 4));
+			repository3.save(new ESL(3.42, 1.86));
+			repository3.save(new ESL(3.42, 2.9));
+			repository3.save(new ESL(3.42, 3.5));
+			repository3.save(new ESL(3.42, 2.44));
 			
 			Pi p1 =  new Pi("000000003d1d1c36");
 			p1.setStatus(true);

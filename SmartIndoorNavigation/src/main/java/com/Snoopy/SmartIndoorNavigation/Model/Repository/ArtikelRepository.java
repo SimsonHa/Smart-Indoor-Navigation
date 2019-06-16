@@ -7,5 +7,7 @@ import com.Snoopy.SmartIndoorNavigation.Model.Entity.Artikel;
 
 @Repository
 public interface ArtikelRepository extends CrudRepository<Artikel, Long> {
+	
+	Artikel findByName(String name);
 
 }

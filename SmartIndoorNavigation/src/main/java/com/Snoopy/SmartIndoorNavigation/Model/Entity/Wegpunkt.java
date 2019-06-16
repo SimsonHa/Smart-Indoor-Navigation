@@ -22,7 +22,8 @@ public class Wegpunkt {
 	private double posX;
 	private double posY;
 	
-	private boolean start;
+	//Anfang oder Ende
+	private String status;
 	
 	//@Autowired
 	//WegpunktRepository repoWegpunkt;
@@ -44,6 +45,12 @@ public class Wegpunkt {
 		}*/
 
 	}
+	public Wegpunkt(double posX, double posY, String status) {
+		super();
+		this.posX = posX;
+		this.posY = posY;
+		this.status = status;
+	}
 
 	public double getPosX() {
 		return posX;
@@ -61,13 +68,15 @@ public class Wegpunkt {
 		this.posY = posY;
 	}
 
-	public boolean getStart() {
-		return start;
+	public String getStatus() {
+		return status;
 	}
 
-	public void setStart(boolean start) {
-		this.start = start;
+	public void setStatus(String status) {
+		this.status = status;
 	}
+
+
 	
 	
 	

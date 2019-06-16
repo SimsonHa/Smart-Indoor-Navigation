@@ -130,11 +130,43 @@ public class Verwaltungsfrontend {
 	    	for(int i = 0; i<sizeKT; i++) {
 	    		Wegpunkt wp1= wrapper.getKanten().get(i).getWegpunkte().get(0);
 	    		Wegpunkt wp2 = wrapper.getKanten().get(i).getWegpunkte().get(1);
+	    		
+	    		Wegpunkt wpCheck1 = null;
+	    		Wegpunkt wpCheck2 = null;
+	    		
+	    		
+	    		try {
+	    			wpCheck1 = repository4.findByPosition(wp1.getPosX(), wp1.getPosY());
+	    			
+	    		}
+	    		catch(Exception e) {
+	    			System.out.println(e);
+	    		}
+	    		try {
+	    			wpCheck2 = repository4.findByPosition(wp2.getPosX(), wp2.getPosY());
+	    			
+	    		}
+	    		catch(Exception e) {
+	    			System.out.println(e);
+	    		}
+	    		
+	    		
 	    		List<Wegpunkt> wpList = new ArrayList<Wegpunkt>();
-	    		wpList.add(wp1);
-	    		wpList.add(wp2);
-	    		repository4.save(wp1);
-	    		repository4.save(wp2);
+	    		
+	    		if(wpCheck1 != null) {
+	    			wpList.add(wpCheck1);
+	    		}
+	    		else {
+	    			wpList.add(wp1);
+	    			repository4.save(wp1);
+	    		}
+	    		if(wpCheck2 != null) {
+	    			wpList.add(wpCheck2);
+	    		}
+	    		else {
+	    			wpList.add(wp2);
+	    			repository4.save(wp2);
+	    		}
 	    		
 	    		Kante k = new Kante(wpList);
 	    		repository6.save(k);

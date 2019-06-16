@@ -30,7 +30,7 @@ public class Endkundenfrontend {
     @PostMapping("fastPath")
     public List<Netzkante> netzKante(@RequestBody WrapperArtikel artikel) {
     	service.setArtikel(artikel.getArtikel());
-    	if(artikel.getArtikel().size()>1) {
+    	if(artikel.getArtikel().size()==1) {
     		return service.path1();
     	}
     	else {

@@ -12,6 +12,9 @@ public class WrapperArtikel {
 	public WrapperArtikel(List<Artikel> artikel) {
 		this.artikel = artikel;
 	}
+	public WrapperArtikel() {
+		
+	}
 
 	public List<Artikel> getArtikel() {
 		return artikel;
