@@ -47,13 +47,13 @@ public class Netzkante {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	/*
+	
 	public double distance () {
 		double x = Math.abs(netzPunkte.get(0).getPosX() - netzPunkte.get(1).getPosX());
 		double y = Math.abs(netzPunkte.get(0).getPosY() - netzPunkte.get(1).getPosY());
 		return Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
 	}
-	*/
+	
 	
 	
 	

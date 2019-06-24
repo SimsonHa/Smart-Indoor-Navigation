@@ -3,11 +3,12 @@ package com.Snoopy.SmartIndoorNavigation.Controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.Snoopy.SmartIndoorNavigation.Logic.TravelingSalesman;
+import com.Snoopy.SmartIndoorNavigation.Logic.TravelingSalesmanOLD;
 import com.Snoopy.SmartIndoorNavigation.Logic.WrapperArtikel;
 import com.Snoopy.SmartIndoorNavigation.Model.Entity.Artikel;
 import com.Snoopy.SmartIndoorNavigation.Model.Entity.Netzkante;
@@ -24,10 +25,10 @@ public class Endkundenfrontend {
 	@Autowired
 	NetzkanteRepository repoNetzkante;
 	
-	@Autowired TravelingSalesman service;
+	@Autowired TravelingSalesmanOLD service;
 
 	
-    @PostMapping("fastPath")
+    @PostMapping("/fastPath")
     public List<Netzkante> netzKante(@RequestBody WrapperArtikel artikel) {
     	service.setArtikel(artikel.getArtikel());
     	if(artikel.getArtikel().size()==1) {
@@ -38,5 +39,16 @@ public class Endkundenfrontend {
     	}
    
     }
+    @GetMapping("/artikel")
+    public List<Artikel> artikel() {
+       List<Artikel> a = (List<Artikel>) repoArtikel.findAll();
+        return a;
+    }
+    
+    //Bewertung des Artikels über Pfadvariable
+    //@PostMapping("/bewertung/{artikelID}/{bewertung}")
+    
+    
+    //Punkt des Artikels auf Bild anzeigen!
 
 }
