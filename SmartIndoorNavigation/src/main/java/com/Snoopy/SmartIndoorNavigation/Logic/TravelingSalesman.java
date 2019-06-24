@@ -23,6 +23,9 @@ public class TravelingSalesman {
 	NetzpunktRepository repoNetzpunkt;
 
 	
+	@Autowired
+	DijkstraWorker worker;
+	
 	List<Artikel> artikel;
 	
 	public TravelingSalesman() {
@@ -35,119 +38,47 @@ public class TravelingSalesman {
 	
 	
 	//Greedy
-	public List<Netzkante> path1(){
+	public List<Netzkante> path(){
 		//Dijkstra
 		List<Netzkante> allKanten = (List<Netzkante>) repoNetzkante.findAll();
 		List<Netzpunkt> allPunkte = (List<Netzpunkt>) repoNetzpunkt.findAll();
 		
-		//Es wird nur ein Artikel gesucht
-		Netzpunkt search = repoNetzpunkt.findByArtikel(artikel.get(0));
-		
-		
-		Netzpunkt start = repoNetzpunkt.findByStatus("anfang");
-		List<Dijkstra> reach = new ArrayList();
-		
-		boolean flag = true;
 		List<Dijkstra> output = new ArrayList();
 		
-		
-		Dijkstra shortest = new Dijkstra(null, null, 999999999);
-		
+		List<Artikel> artikelTemp = artikel;
 		for(int x = 0; x<artikel.size(); x++) {
-			//if()
-		}
-
-		for(int i = 0; i<allPunkte.size();i++) {
-			//In der ersten Runde den Startpunkt markieren
-			if(i==0) {
-				Dijkstra curNode = new Dijkstra(start, null, 0);
-				curNode.setStatus(false);
-				//Verknüpfte Wege finden
-				List<Netzkante> netzKConnected = repoNetzkante.findConnected(curNode.getNetzpunkt());
-				for(int j = 0; j<netzKConnected.size();j++) {
-					if(netzKConnected.get(j).getNetzPunkte().get(0).equals(curNode.getNetzpunkt())) {
-						reach.add(new Dijkstra(netzKConnected.get(j).getNetzPunkte().get(1), (List)netzKConnected.get(j) ,netzKConnected.get(j).distance()));
-					}
-					else {
-						reach.add(new Dijkstra(netzKConnected.get(j).getNetzPunkte().get(0), (List)netzKConnected.get(j) ,netzKConnected.get(j).distance()));
-					}
-				}
-			}
-			//In allen anderen Runden den Punkt markieren mit der kürzesten Strecke
-			else {
-				double distance = 999999999;
-				int index =0;
-				for(int j = 0; j<reach.size();j++) {
-					//Schon besuchte Punkte weglassen
-					if(reach.get(j).getGewicht()<distance && reach.get(j).isStatus()){
-						index = j;
-					}
-				}
-				//Aktueller Punkt
-				Dijkstra curNode = reach.get(index);
-				curNode.setStatus(false);
-				
-				//Check ob wir am Ziel sind? Abbrechen der For-Schleife !
-				if(curNode.getNetzpunkt().equals(search)) {
-					//reach.get(reach.indexOf(curNode)).setFinale(true);
-					if(curNode.getGewicht()<shortest.getGewicht()) {
-						shortest = curNode;
-						artikel.remove(search.get)
-					}
-					
-					
-					break;
-				}
-				
-				//Alle Verbindungen
-				List<Netzkante> netzKConnected = repoNetzkante.findConnected(curNode.getNetzpunkt());
-				List<Netzpunkt> netzPConnected = new ArrayList();
-				
-				for(int j = 0; j<netzKConnected.size();j++) {
-					if(netzKConnected.get(j).getNetzPunkte().get(0).equals(curNode.getNetzpunkt())) {
-						netzPConnected.add(netzKConnected.get(j).getNetzPunkte().get(1));
-					}
-					else {
-						netzPConnected.add(netzKConnected.get(j).getNetzPunkte().get(0));
-					}
-				}
-				
-				//Checken ob die Punkte schon in Reach sind?
-				for(int k =0; k<netzPConnected.size(); k++) {
-					boolean contains = true;
-					for(int l =0; l < reach.size(); l++) {
-						//Wenn der Punkt noch nicht in Reach ist, boolean auf false setzen
-						if(reach.get(l).getNetzpunkt().equals(netzPConnected.get(k))) {
-							contains = false;
-							//Wenn der Punkt bereits existiert, muss erstmal gecheckt werden wie weit die Entfernung ist
-							if(reach.get(l).getGewicht()>netzKConnected.get(k).distance()) {
-								reach.get(l).setGewicht(netzKConnected.get(k).distance());
-								reach.get(l).setNetzkanten(curNode.getNetzkanten());
-							}
-						}
-					}
-					//Wenn der Punkt neu ist, dann einfach zu reach hinzufügen
-					if(contains) {
-						reach.add(new Dijkstra(netzPConnected.get(k), curNode.getNetzkanten(), netzKConnected.get(k).distance()));
-					}	
-				}
-
-			}
+			Dijkstra shortest = new Dijkstra(null, null, 999999999);
 			
+			
+			for(int y = 0; y<artikelTemp.size(); y++) {
+				if(x==0) {
+					if(worker.work(repoNetzpunkt.findByStatus("anfang"), repoNetzpunkt.findByArtikel(artikelTemp.get(y))).getGewicht()<shortest.getGewicht()) {
+						shortest = worker.work(repoNetzpunkt.findByStatus("anfang"), repoNetzpunkt.findByArtikel(artikelTemp.get(y)));
+					}
+					
+				}
+				else {
+					if(worker.work(output.get(x-1).getNetzpunkt(), repoNetzpunkt.findByArtikel(artikelTemp.get(y))).getGewicht()<shortest.getGewicht()) {
+						shortest = worker.work(output.get(x-1).getNetzpunkt(), repoNetzpunkt.findByArtikel(artikelTemp.get(y)));
+					}
+				}
+			}
+			output.add(shortest);
+			artikelTemp.remove(shortest.getNetzpunkt().getArtikel());
 		}
 		
+		List<Netzkante> output2 = new ArrayList();
+		
+		for(int z = 0; z< output.size(); z++) {
+			output2.addAll(output.get(z).getNetzkanten());
+		}
+		
+		return output2;
 
-		
-		
-		//
-		return null;
 		
 	}
 	
-	public List<Netzkante> path2(){
-		
-		return null;
-	}
+
 	/*
 	public double distance (Netzpunkt np1, Netzpunkt np2) {
 		double x = Math.abs(np1.getPosX() - np2.getPosX());

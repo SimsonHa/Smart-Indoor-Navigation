@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.Snoopy.SmartIndoorNavigation.Logic.TravelingSalesmanOLD;
+import com.Snoopy.SmartIndoorNavigation.Logic.TravelingSalesman;
 import com.Snoopy.SmartIndoorNavigation.Logic.WrapperArtikel;
 import com.Snoopy.SmartIndoorNavigation.Model.Entity.Artikel;
 import com.Snoopy.SmartIndoorNavigation.Model.Entity.Netzkante;
@@ -25,18 +25,13 @@ public class Endkundenfrontend {
 	@Autowired
 	NetzkanteRepository repoNetzkante;
 	
-	@Autowired TravelingSalesmanOLD service;
+	@Autowired TravelingSalesman service;
 
 	
     @PostMapping("/fastPath")
     public List<Netzkante> netzKante(@RequestBody WrapperArtikel artikel) {
     	service.setArtikel(artikel.getArtikel());
-    	if(artikel.getArtikel().size()==1) {
-    		return service.path1();
-    	}
-    	else {
-    		return service.path2();
-    	}
+    	return service.path();
    
     }
     @GetMapping("/artikel")
