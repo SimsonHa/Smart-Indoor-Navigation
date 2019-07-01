@@ -20,12 +20,16 @@ public class DijkstraWorker {
 	@Autowired
 	NetzpunktRepository repoNetzpunkt;
 	
-	List<Netzkante> allKanten = (List<Netzkante>) repoNetzkante.findAll();
-	List<Netzpunkt> allPunkte = (List<Netzpunkt>) repoNetzpunkt.findAll();
+	
+	List<Netzkante> allKanten;
+	List<Netzpunkt> allPunkte;
+	
 	
 
 	
 	public Dijkstra work (Netzpunkt start, Netzpunkt search) {
+		allKanten = (List<Netzkante>) repoNetzkante.findAll();
+		allPunkte = (List<Netzpunkt>) repoNetzpunkt.findAll();
 		
 		List<Dijkstra> reach = new ArrayList();
 		List<Dijkstra> output = new ArrayList();

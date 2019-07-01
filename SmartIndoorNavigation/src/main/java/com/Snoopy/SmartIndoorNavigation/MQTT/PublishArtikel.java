@@ -15,7 +15,7 @@ import com.Snoopy.SmartIndoorNavigation.Model.Entity.ESL;
 public class PublishArtikel {
 	
 	//MQTT Broker
-    String topic        = "/nav/updateData/";
+    String topic        = "nav/updateData";
     
     int qos             = 2;
     String broker       = "tcp://mqtt.iot-embedded.de:1883";
@@ -33,7 +33,7 @@ public class PublishArtikel {
 
     public void publish(List<ESL> esl) {
     	int eslSize = esl.size();
-    	String content      = null;
+    	
     	
     	try {
             sampleClient = new MqttClient(broker, clientId, persistence);
@@ -58,7 +58,15 @@ public class PublishArtikel {
 
 	        
 	        for(int i = 0; i<eslSize; i++) {
-	        	content = "{macAdress: "+esl.get(i).getPi().getMacAdres()+ ", name: "+esl.get(i).getArtikel().getName()+", preis: "+esl.get(i).getArtikel().getPreis()+", kategorie: "+esl.get(i).getArtikel().getKategorie().getName()+"}" ;
+	        	String content      = null;
+	        	try {
+	        		content = "{\"macAdress\":\""+esl.get(i).getPi().getMacAdres()+ "\", \"name\":\""+esl.get(i).getArtikel().getName()+"\", \"preis\":\""+esl.get(i).getArtikel().getPreis()+"\", \"kategorie\":\""+esl.get(i).getArtikel().getKategorie().getName()+"\"}" ;
+	        	}
+	        	catch(NullPointerException e) {
+	        		System.out.println("ESL an der Position " + esl.get(i).getPosX()+ " / " + esl.get(i).getPosY() + " ist nicht mit einem Pi verknüpft!");
+	        	}
+	        	
+	        	if(content!= null) {
 		        try {
 
 		            System.out.println("Publishing message: "+content);
@@ -69,7 +77,6 @@ public class PublishArtikel {
 		            if(eslSize-i<=1) {
 			            sampleClient.disconnect();
 			            System.out.println("Disconnected");
-			            System.exit(0);
 		            }
 
 		            
@@ -81,6 +88,7 @@ public class PublishArtikel {
 		            System.out.println("excep "+me);
 		            me.printStackTrace();
 		        }
+	        	}
 	        }
 	    }
 	}

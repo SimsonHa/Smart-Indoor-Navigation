@@ -21,6 +21,8 @@ public class Netzpunkt {
 	@OneToOne
 	Artikel artikel;
 	
+	//private double[] transform;
+	
 	public Netzpunkt() {
 		
 	}
@@ -62,7 +64,6 @@ public class Netzpunkt {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-
 
 	
 	

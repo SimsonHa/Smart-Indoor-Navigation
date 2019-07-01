@@ -17,7 +17,7 @@ import com.Snoopy.SmartIndoorNavigation.Model.Repository.PiRepository;
 public class SubscribePi implements MqttCallback {
 	
 	//MQTT Broker
-    String topic        = "/nav/piReady/";
+    String topic        = "nav/PiReady";
     
     int qos             = 2;
     String broker       = "tcp://mqtt.iot-embedded.de:1883";
@@ -81,9 +81,11 @@ public class SubscribePi implements MqttCallback {
 		
 		String messageStr = message.toString();
 		
+		//{"status": "true", "mac": "b827eb81d371"}
 		messageStr = messageStr.replace("{", "");
 		messageStr = messageStr.replace("}", "");
 		messageStr = messageStr.replace(" ", "");
+		messageStr = messageStr.replace("\"", "");
 		
 		System.out.println(messageStr);
 		String[] messageArr = messageStr.split(",");
@@ -91,10 +93,40 @@ public class SubscribePi implements MqttCallback {
 		
 		System.out.println(messageArr[0]);
 		System.out.println(messageArr[1]);
-		Pi pi = repoPi.findByMacAdress(messageArr[0].split(":")[1]);
-		pi.setStatus(Boolean.parseBoolean(messageArr[1].split(":")[1]));
 		
-		repoPi.save(pi);
+		int indexMac;
+		int indexStatus;
+		if(messageArr[0].split(":")[0].equals("mac")) {
+			indexMac = 0;
+			indexStatus = 1;
+		}
+		else {
+			indexMac = 1;
+			indexStatus = 0;
+		}
+		
+		Pi pi = null;
+		try {
+			pi = repoPi.findByMacAdress(messageArr[indexMac].split(":")[1]);
+		}
+		catch(Exception e) {
+			System.out.println(e);
+		}
+		
+		if(pi == null) {
+			Pi newPi = new Pi(messageArr[indexMac].split(":")[1]);
+			newPi.setStatus(Boolean.parseBoolean(messageArr[indexStatus].split(":")[1]));
+			repoPi.save(newPi);
+		}
+		else {
+			pi.setStatus(Boolean.parseBoolean(messageArr[indexStatus].split(":")[1]));
+			repoPi.save(pi);
+		}
+		
+		
+		
+		
+		
 		
 	}
 }

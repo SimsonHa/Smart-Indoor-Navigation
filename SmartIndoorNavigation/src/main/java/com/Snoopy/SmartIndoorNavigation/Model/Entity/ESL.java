@@ -25,6 +25,8 @@ public class ESL {
 	@OneToOne
 	private Pi pi;
 	
+	//private double[] transform;
+	
 	
 	//@ManyToOne
 	//private Grundriss grundriss;
@@ -76,6 +78,7 @@ public class ESL {
 	public void setPi(Pi pi) {
 		this.pi = pi;
 	}
+
 	
 	
 	
