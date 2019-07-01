@@ -138,9 +138,9 @@ public class Netz {
 					aX = temp1;
 				}
 				if(aY > bY) {
-					double temp1 = bY;
+					double temp2 = bY;
 					bY = aY;
-					aY = temp1;
+					aY = temp2;
 				}
 				
 

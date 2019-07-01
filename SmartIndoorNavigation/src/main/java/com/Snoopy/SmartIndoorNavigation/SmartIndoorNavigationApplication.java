@@ -55,8 +55,8 @@ public class SmartIndoorNavigationApplication {
 			repository4.save(p3);
 			repository4.save(new Pi("000000003d1d1c78"));
 			
-			ESL esl1 = new ESL(5.6, 180.2);
-			ESL esl2 = new ESL(145.6, 199.3);
+			ESL esl1 = new ESL(3.42, 4.34);
+			ESL esl2 = new ESL(3.42, 4.6);
 			
 			esl1.setPi(p1);
 			esl1.setArtikel(repository1.findByName("Bier"));

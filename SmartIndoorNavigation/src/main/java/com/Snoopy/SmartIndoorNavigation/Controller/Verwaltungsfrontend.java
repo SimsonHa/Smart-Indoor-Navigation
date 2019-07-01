@@ -25,6 +25,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.Snoopy.SmartIndoorNavigation.Logic.Netz;
 import com.Snoopy.SmartIndoorNavigation.Logic.Wrapper;
 import com.Snoopy.SmartIndoorNavigation.Logic.WrapperESL;
+import com.Snoopy.SmartIndoorNavigation.Logic.WrapperNetz;
+import com.Snoopy.SmartIndoorNavigation.Logic.WrapperNetzArr;
 import com.Snoopy.SmartIndoorNavigation.MQTT.PublishArtikel;
 import com.Snoopy.SmartIndoorNavigation.MQTT.SubscribePi;
 import com.Snoopy.SmartIndoorNavigation.Model.Entity.Artikel;
@@ -81,7 +83,7 @@ public class Verwaltungsfrontend {
 	    	List<ESL> esl = (List<ESL>) repository3.findAll();
 	    	return esl;
 	    }
-	  
+		
 		@CrossOrigin(origins = "http://localhost:9000")
 	    @GetMapping("/pi/{status}")
 	    public List<Pi> findByStatus(@PathVariable boolean status){
@@ -99,7 +101,7 @@ public class Verwaltungsfrontend {
 	    	return esl;
 	    }
 		*/
-		
+		//ESL, Artikel und Pi verheiraten
 		@CrossOrigin(origins = "http://localhost:8080")
 	    @PutMapping("/piConnect")
 	    public void ESLconnect(@RequestBody WrapperESL wrapperESL) {
@@ -109,7 +111,10 @@ public class Verwaltungsfrontend {
 			
 			repository3.save(esl);
 	    }
-		
+		//Neuen Artikel + ESL anlegen
+		//@CrossOrigin(origins = "http://localhost:8080")
+	    //@PutMapping("/newArtikel")
+		//public void NewArtikel(@)
 	    
 	    //https://www.baeldung.com/spring-request-response-body
 	    //https://stackoverflow.com/questions/30511911/getting-not-supported-media-type-error
@@ -119,7 +124,7 @@ public class Verwaltungsfrontend {
 	    	
 	    	repository4.save(wp);
 	    	return wp;
-	    }
+		}
 		@CrossOrigin(origins = "http://localhost:9000")
 	    @GetMapping("wegpunktAll")
 	    public List<Wegpunkt> wpAll(){
@@ -127,92 +132,106 @@ public class Verwaltungsfrontend {
 	    	return wp;
 		}
     	
-		@CrossOrigin(origins = "http://localhost:9000")
-	    @PostMapping("netz")
-	    public Grundriss netz(@RequestBody Wrapper wrapper) {
+		//Kanten speichern 
+		@CrossOrigin(origins = "http://localhost:8080")
+	    @PostMapping("/netz")
+	    public void netz(@RequestBody WrapperNetzArr wrapper) {
+			//Bisheriges Netz löschen
+	    	repository4.deleteAll();
+	    	repository6.deleteAll();
 	    	
+	    	int sizeWP = wrapper.getWrapperNetzArr().size();
 	    	
-	    	int sizeESL = wrapper.getEsls().size();
+	    	for(int i =0; i<sizeWP; i++) {
+	    		Wegpunkt wp = new Wegpunkt(wrapper.getWrapperNetzArr().get(i).getId(), wrapper.getWrapperNetzArr().get(i).getX(), wrapper.getWrapperNetzArr().get(i).getY(), wrapper.getWrapperNetzArr().get(i).getStatus());
+	    		repository4.save(wp);
 	    	
-	    	List<ESL> eslList = new ArrayList<ESL>();
-	    	for(int j = 0; j<sizeESL; j++) {
-	    		ESL e = new ESL(wrapper.getEsls().get(j).getPosX(), wrapper.getEsls().get(j).getPosY(), wrapper.getGrundriss());
-	    		repository3.save(e);
-	    		eslList.add(e);
 	    	}
-	    	Grundriss gr = wrapper.getGrundriss();
-	    	gr.setEsls(eslList);
-	    	
-	    	
-	    	List<Kante> kanteList = new ArrayList<Kante>();
-	    	int sizeKT = wrapper.getKanten().size();
-	    	for(int i = 0; i<sizeKT; i++) {
-	    		Wegpunkt wp1= wrapper.getKanten().get(i).getWegpunkte().get(0);
-	    		Wegpunkt wp2 = wrapper.getKanten().get(i).getWegpunkte().get(1);
-	    		
-	    		Wegpunkt wpCheck1 = null;
-	    		Wegpunkt wpCheck2 = null;
-	    		
-	    		
-	    		try {
-	    			wpCheck1 = repository4.findByPosition(wp1.getPosX(), wp1.getPosY());
-	    			
-	    		}
-	    		catch(Exception e) {
-	    			System.out.println(e);
-	    		}
-	    		try {
-	    			wpCheck2 = repository4.findByPosition(wp2.getPosX(), wp2.getPosY());
-	    			
-	    		}
-	    		catch(Exception e) {
-	    			System.out.println(e);
-	    		}
-	    		
-	    		
-	    		List<Wegpunkt> wpList = new ArrayList<Wegpunkt>();
-	    		
-	    		if(wpCheck1 != null) {
-	    			wpList.add(wpCheck1);
-	    		}
-	    		else {
-	    			wpList.add(wp1);
-	    			repository4.save(wp1);
-	    		}
-	    		if(wpCheck2 != null) {
-	    			wpList.add(wpCheck2);
-	    		}
-	    		else {
-	    			wpList.add(wp2);
-	    			repository4.save(wp2);
-	    		}
-	    		
-	    		Kante k = new Kante(wpList);
-	    		repository6.save(k);
-	    		kanteList.add(k);
-	    		
-	    	}
-	    	
-	    	gr.setKanten(kanteList);
-	    	repository5.save(gr);
-	    
-	    	
+			for(int i =0; i<sizeWP; i++) {
+				int sizeConn = wrapper.getWrapperNetzArr().get(i).getConnectedTo().length;
+				for(int j =0; j<sizeConn; j++) {
+					List<Wegpunkt> wpList1 = new ArrayList<Wegpunkt>();
+					List<Wegpunkt> wpList2 = new ArrayList<Wegpunkt>();
+					
+					Optional<Wegpunkt> wp1 = repository4.findById(wrapper.getWrapperNetzArr().get(i).getId());
+					long id = wrapper.getWrapperNetzArr().get(i).getConnectedTo()[j];
+					Optional<Wegpunkt> wp2 = repository4.findById(id);
+					
+					wpList1.add(wp1.get());
+					wpList1.add(wp2.get());
+					
+					wpList2.add(wp2.get());
+					wpList2.add(wp1.get());
+					
+					boolean flag = true;
+					int sizeKante = (int) repository6.count();
+					List<Kante> kanten = (List<Kante>) repository6.findAll();
+					//Check ob es die Kante schon gibt
+					for(int k =0; k<sizeKante; k++) {
+						if(kanten.get(k).getWegpunkte().get(0).getId() == wpList1.get(0).getId() && kanten.get(k).getWegpunkte().get(1).getId() == wpList1.get(1).getId()) {
+							flag = false;
+						}
+						else if (kanten.get(k).getWegpunkte().get(0).getId() == wpList2.get(0).getId() && kanten.get(k).getWegpunkte().get(1).getId() == wpList2.get(1).getId()) {
+							flag = false;
+						}
+					}
+					if(flag) {
+						Kante k = new Kante(wpList1);
+						repository6.save(k);
+					
+					}
+					
+						
 
-	    	return gr;
-	    }
-
-		@CrossOrigin(origins = "http://localhost:9000")
-	    @GetMapping("/kante")
-	    public List<Netzkante> kante() {
-	    	 	
+				}
+			}
+			
+		//Neues Netz mit ESL's erzeugen wenn es schon ESL's gibt
+	    if(repository6.count()>0) {
 	    	netzService.setEsls(repository3.findAll());
 	    	netzService.setKanten(repository6.findAll());
 	    	
 	    	netzService.netzUpdate();
-	    	List<Netzkante> k = (List<Netzkante>) repository7.findAll();
-	        
-	    	return k;
 	    }
+
+	    }
+		
+		
+		//Get Kanten
+		@CrossOrigin(origins = "http://localhost:8080")
+	    @GetMapping("/getNetz")
+	    public List<WrapperNetz> getNetz() {
+			List <Wegpunkt> wpS = (List<Wegpunkt>) repository4.findAll();
+			List <Kante> kS = (List<Kante>) repository6.findAll();
+			
+			List<WrapperNetz> wrapperN = new ArrayList();
+			for(int i = 0; i < wpS.size(); i++) {
+				List<Integer> connectedAr = new ArrayList();
+				for(int j = 0; j < kS.size(); j++){
+					if(wpS.get(i).getId() == kS.get(j).getWegpunkte().get(0).getId()) {
+						if(!connectedAr.contains(kS.get(j).getWegpunkte().get(1).getId())){
+								connectedAr.add((int)(long)kS.get(j).getWegpunkte().get(1).getId());
+						}
+					}
+					
+					else if(wpS.get(i).getId() == kS.get(j).getWegpunkte().get(1).getId()) {
+						if(!connectedAr.contains(kS.get(j).getWegpunkte().get(0).getId())){
+							connectedAr.add((int)(long)kS.get(j).getWegpunkte().get(0).getId());
+					}
+					}
+				}
+				int[] connected = new int[connectedAr.size()];
+				for(int k =0; k<connectedAr.size();k++) {
+					connected[k] = (int) connectedAr.get(k);
+				}
+				
+				
+				WrapperNetz wN = new WrapperNetz(wpS.get(i).getId(), wpS.get(i).getPosX(), wpS.get(i).getPosY(), wpS.get(i).getStatus(),  connected);
+				wrapperN.add(wN);
+			}
+			
+			return wrapperN;
+		}
 }
 	    
 

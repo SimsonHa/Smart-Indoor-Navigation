@@ -42,7 +42,7 @@ public class Endkundenfrontend {
    
     }
     */
-	@CrossOrigin(origins = "localhost:8080")
+	@CrossOrigin(origins = "http://localhost:8080")
     @GetMapping("/artikel")
     public List<Artikel> artikel() {
        List<Artikel> a = (List<Artikel>) repoArtikel.findAll();

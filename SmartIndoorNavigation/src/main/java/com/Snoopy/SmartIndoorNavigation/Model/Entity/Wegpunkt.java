@@ -16,8 +16,7 @@ import com.Snoopy.SmartIndoorNavigation.Model.Repository.WegpunktRepository;
 public class Wegpunkt {
 
 	@Id
-	@GeneratedValue
-	private Long id;
+	private long id;
 	
 	private double posX;
 	private double posY;
@@ -45,8 +44,9 @@ public class Wegpunkt {
 		}*/
 
 	}
-	public Wegpunkt(double posX, double posY, String status) {
+	public Wegpunkt(long id, double posX, double posY, String status) {
 		super();
+		this.id = id;
 		this.posX = posX;
 		this.posY = posY;
 		this.status = status;
@@ -76,7 +76,15 @@ public class Wegpunkt {
 		this.status = status;
 	}
 
+	public Long getId() {
+		return id;
+	}
 
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	
 	
 	
 	
