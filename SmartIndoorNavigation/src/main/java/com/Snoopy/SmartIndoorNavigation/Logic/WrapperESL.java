@@ -3,12 +3,12 @@ package com.Snoopy.SmartIndoorNavigation.Logic;
 import com.Snoopy.SmartIndoorNavigation.Model.Entity.Artikel;
 
 public class WrapperESL {
-	Artikel product;
-	Transform transform;
-	public WrapperESL(Artikel product, Transform transform) {
+	Artikel artikel;
+	Place place;
+	public WrapperESL(Artikel artikel, Place place) {
 		super();
-		this.product = product;
-		this.transform = transform;
+		this.artikel = artikel;
+		this.place = place;
 	}
 	
 	public WrapperESL() {
@@ -16,20 +16,21 @@ public class WrapperESL {
 	}
 
 	public Artikel getArtikel() {
-		return product;
+		return artikel;
 	}
 
-	public Transform getTransform() {
-		return transform;
+	public Place getPlace() {
+		return place;
 	}
 
-	public void setArtikel(Artikel product) {
-		this.product = product;
+	public void setArtikel(Artikel artikel) {
+		this.artikel = artikel;
 	}
 
-	public void setTransform(Transform transform) {
-		this.transform = transform;
+	public void setPlace(Place place) {
+		this.place = place;
 	}
-	
+
+
 	
 }

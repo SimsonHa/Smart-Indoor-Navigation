@@ -1,8 +1,10 @@
 package com.Snoopy.SmartIndoorNavigation.Model.Entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class Kategorie {
@@ -11,6 +13,8 @@ public class Kategorie {
 	@GeneratedValue
 	private Long id;
 	
+	@NotNull
+	@Column(unique = true)
 	private String name;
 
 	public Kategorie() {
@@ -27,6 +31,14 @@ public class Kategorie {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 	
 	

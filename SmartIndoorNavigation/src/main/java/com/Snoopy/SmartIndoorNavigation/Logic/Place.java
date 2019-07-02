@@ -1,11 +1,11 @@
 package com.Snoopy.SmartIndoorNavigation.Logic;
 
-public class Transform {
+public class Place {
 	long id;
 	String mac;
 	double x;
 	double y;
-	public Transform(long id, String mac, double x, double y) {
+	public Place(long id, String mac, double x, double y) {
 		super();
 		this.id = id;
 		this.mac = mac;
@@ -14,7 +14,7 @@ public class Transform {
 	}
 	
 	
-	public Transform() {
+	public Place() {
 		
 	}
 

@@ -41,8 +41,8 @@ public class Endkundenfrontend {
 
 	
 	
-	@CrossOrigin(origins = "http://localhost:8080")
-    @GetMapping("/fastPath")
+	@CrossOrigin(origins = "http://localhost:8082")
+    @PostMapping("/fastPath")
     public List<Netzkante> netzKante(@RequestBody WrapperArtikelNummer artikelNr) {
 		List <Artikel> aL = new ArrayList();
 		for(int i = 0; i < artikelNr.getArtNr().size();i++) {
@@ -54,13 +54,13 @@ public class Endkundenfrontend {
    
     }
     
-	@CrossOrigin(origins = "http://localhost:8080")
-    @GetMapping("/artikel")
+	@CrossOrigin(origins = "http://localhost:8082")
+    @GetMapping("/artikelE")
     public List<Artikel> artikel() {
        List<Artikel> a = (List<Artikel>) repoArtikel.findAll();
         return a;
     }
-	@CrossOrigin(origins = "http://localhost:8080")
+	@CrossOrigin(origins = "http://localhost:8082")
     @GetMapping("/artikelPos/{artikelID}")
     public ESL artikelPos(@PathVariable long artikelID) {
 		

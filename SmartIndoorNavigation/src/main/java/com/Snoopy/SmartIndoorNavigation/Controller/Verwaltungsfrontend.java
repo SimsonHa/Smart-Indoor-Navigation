@@ -40,6 +40,7 @@ import com.Snoopy.SmartIndoorNavigation.Model.Repository.ArtikelRepository;
 import com.Snoopy.SmartIndoorNavigation.Model.Repository.ESLRepository;
 import com.Snoopy.SmartIndoorNavigation.Model.Repository.GrundrissRepository;
 import com.Snoopy.SmartIndoorNavigation.Model.Repository.KanteRepository;
+import com.Snoopy.SmartIndoorNavigation.Model.Repository.KategorieRepository;
 import com.Snoopy.SmartIndoorNavigation.Model.Repository.NetzkanteRepository;
 import com.Snoopy.SmartIndoorNavigation.Model.Repository.PiRepository;
 import com.Snoopy.SmartIndoorNavigation.Model.Repository.WegpunktRepository;
@@ -63,31 +64,35 @@ public class Verwaltungsfrontend {
 	KanteRepository repository6;
 	@Autowired
 	NetzkanteRepository repository7;
+	@Autowired
+	KategorieRepository repository8;
 	
 	@Autowired
 	Netz netzService;
 	
 	@Autowired
 	PublishArtikel publishService;
-	
-	
-	  /*  @GetMapping("/artikel")
+		
+		//Alle Artikel zurückgeben
+		@CrossOrigin(origins = "http://localhost:4200")
+		@GetMapping("/artikelV")
 	    public List<Artikel> artikel() {
 	       List<Artikel> a = (List<Artikel>) repository1.findAll();
 	        return a;
 	    }
-	  */  
-		@CrossOrigin(origins = "http://localhost:9000")
+	  
+		@CrossOrigin(origins = "http://localhost:4200")
 	    @GetMapping("/esl")
 	    public List<ESL> esl(){
 	    	List<ESL> esl = (List<ESL>) repository3.findAll();
 	    	return esl;
 	    }
 		
-		@CrossOrigin(origins = "http://localhost:9000")
-	    @GetMapping("/pi/{status}")
-	    public List<Pi> findByStatus(@PathVariable boolean status){
-	    	List<Pi> p = (List<Pi>) repository2.findByStatus(status);   	
+		//Alle aktiven Pi's zurückgeben
+		@CrossOrigin(origins = "http://localhost:4200")
+	    @GetMapping("/pi")
+	    public List<Pi> findByStatus(){
+	    	List<Pi> p = (List<Pi>) repository2.findByStatus(true);   	
 	    	return p;
 	    }
 		/*
@@ -102,7 +107,7 @@ public class Verwaltungsfrontend {
 	    }
 		*/
 		//ESL, Artikel und Pi verheiraten
-		@CrossOrigin(origins = "http://localhost:8080")
+		/*@CrossOrigin(origins = "http://localhost:8080")
 	    @PutMapping("/piConnect")
 	    public void ESLconnect(@RequestBody WrapperESL wrapperESL) {
 			ESL esl = repository3.findByPosition(wrapperESL.getTransform().getX(), wrapperESL.getTransform().getY());
@@ -110,18 +115,30 @@ public class Verwaltungsfrontend {
 			esl.setPi(repository2.findByMacAdress(wrapperESL.getTransform().getMac()));
 			
 			repository3.save(esl);
-	    }
-		//Neuen Artikel + ESL anlegen
-		//@CrossOrigin(origins = "http://localhost:8080")
-	    //@PostMapping("/newArtikel")
-		//public void NewArtikel(@RequestBody
+	    }*/
+		//Neuen Artikel anlegen
+		@CrossOrigin(origins = "http://localhost:4200")
+	    @PostMapping("/newArtikel")
+		public void NewArtikel(@RequestBody Artikel artikel) {
+			try {
+				repository8.findByName(artikel.getKategorie().getName()).getName();
+				artikel.setKategorie(repository8.findByName(artikel.getKategorie().getName()));
+			}
+			catch(NullPointerException e) {
+				repository8.save(artikel.getKategorie());
+			}
+
+			
+			repository1.save(artikel);
+		}
+				
 	    
 	    //https://www.baeldung.com/spring-request-response-body
 	    //https://stackoverflow.com/questions/30511911/getting-not-supported-media-type-error
 
     	
 		//Kanten speichern 
-		@CrossOrigin(origins = "http://localhost:8080")
+		@CrossOrigin(origins = "http://localhost:4200")
 	    @PostMapping("/netz")
 	    public void netz(@RequestBody WrapperNetzArr wrapper) {
 			//Bisheriges Netz löschen
@@ -186,7 +203,7 @@ public class Verwaltungsfrontend {
 		
 		
 		//Get Kanten
-		@CrossOrigin(origins = "http://localhost:8080")
+		@CrossOrigin(origins = "http://localhost:4200")
 	    @GetMapping("/getNetz")
 	    public List<WrapperNetz> getNetz() {
 			List <Wegpunkt> wpS = (List<Wegpunkt>) repository4.findAll();

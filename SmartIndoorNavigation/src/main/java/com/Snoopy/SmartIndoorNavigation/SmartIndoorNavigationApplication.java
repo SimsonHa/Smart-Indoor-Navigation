@@ -36,10 +36,10 @@ public class SmartIndoorNavigationApplication {
 			repository2.save(new Kategorie("Gemüse"));
 			repository2.save(new Kategorie("Getränke"));
 			
-			repository1.save(new Artikel("Apfel", 2.5, "123", repository2.findByName("Obst")));
-			repository1.save(new Artikel("Tomate", 5.2, "456", repository2.findByName("Gemüse")));
-			repository1.save(new Artikel("Kirsche", 4.1, "789", repository2.findByName("Obst")));
-			repository1.save(new Artikel("Bier", 1.1, "444", repository2.findByName("Getränke")));
+			//repository1.save(new Artikel("Apfel", 2.5, "123", repository2.findByName("Obst")));
+			//repository1.save(new Artikel("Tomate", 5.2, "456", repository2.findByName("Gemüse")));
+			//repository1.save(new Artikel("Kirsche", 4.1, "789", repository2.findByName("Obst")));
+			//repository1.save(new Artikel("Bier", 1.1, "444", repository2.findByName("Getränke")));
 			
 
 			
@@ -55,8 +55,8 @@ public class SmartIndoorNavigationApplication {
 			repository4.save(p3);
 			repository4.save(new Pi("000000003d1d1c78"));
 			
-			ESL esl1 = new ESL(1.7, 3.18);
-			ESL esl2 = new ESL(2.53, 3.92);
+			ESL esl1 = new ESL(560, 240);
+			ESL esl2 = new ESL(502, 205.5);
 			
 			esl1.setPi(p1);
 			esl1.setArtikel(repository1.findByName("Bier"));
@@ -64,11 +64,11 @@ public class SmartIndoorNavigationApplication {
 			esl2.setPi(p2);
 			esl2.setArtikel(repository1.findByName("Kirsche"));
 			
-			repository3.save(new ESL(3.42, 4));
-			repository3.save(new ESL(3.42, 1.86));
-			repository3.save(new ESL(3.42, 2.9));
-			repository3.save(new ESL(3.42, 3.5));
-			repository3.save(new ESL(3.42, 2.44));
+			//repository3.save(new ESL(3.42, 4));
+			//repository3.save(new ESL(3.42, 1.86));
+			//repository3.save(new ESL(3.42, 2.9));
+			//repository3.save(new ESL(3.42, 3.5));
+			//repository3.save(new ESL(3.42, 2.44));
 			repository3.save(esl1);
 			repository3.save(esl2);
 			

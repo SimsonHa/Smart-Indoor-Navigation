@@ -10,7 +10,6 @@ import javax.validation.constraints.NotNull;
 public class Artikel {
 	
 	@Id
-	@GeneratedValue
 	private Long id;
 	
 	@NotNull
@@ -20,7 +19,7 @@ public class Artikel {
 	@NotNull
 	private String artNr;
 	
-	@NotNull
+	
 	@ManyToOne
 	private Kategorie kategorie;
 	
@@ -61,6 +60,14 @@ public class Artikel {
 
 	public void setKategorie(Kategorie kategorie) {
 		this.kategorie = kategorie;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 	
 	
