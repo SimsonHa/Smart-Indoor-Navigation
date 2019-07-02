@@ -12,6 +12,6 @@ import com.Snoopy.SmartIndoorNavigation.Model.Entity.Netzpunkt;
 @Repository
 public interface NetzkanteRepository extends CrudRepository<Netzkante, Long> {
 	
-	@Query("SELECT netzkante FROM Netzkante netzkante where netzkante.netzPunkte.get(0) = :netzP OR netzkante.netzPunkte.get(1) = :netzP")
-	List<Netzkante> findConnected (@Param("netzP") Netzpunkt netzP);
+	//@Query("SELECT netzkante FROM Netzkante netzkante where netzkante.netzPunkte.get(0) = :netzP OR netzkante.netzPunkte.get(1) = :netzP")
+	//List<Netzkante> findConnected (@Param("netzP") Netzpunkt netzP);
 }

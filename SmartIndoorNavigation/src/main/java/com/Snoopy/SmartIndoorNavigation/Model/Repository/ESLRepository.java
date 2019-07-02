@@ -17,6 +17,8 @@ public interface ESLRepository extends CrudRepository<ESL, Long> {
 	
 	@Query("SELECT esl FROM ESL esl where esl.posX = :posX AND esl.posY = :posY")
 	ESL findByPosition (@Param("posX") double posX, @Param("posY") double posY);
+	
+	ESL findByArtikel(Optional<Artikel> a);
 
 
 

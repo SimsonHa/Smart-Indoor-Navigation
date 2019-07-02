@@ -10,4 +10,6 @@ public interface ArtikelRepository extends CrudRepository<Artikel, Long> {
 	
 	Artikel findByName(String name);
 
+	Artikel findByArtNr(String artNr);
+
 }

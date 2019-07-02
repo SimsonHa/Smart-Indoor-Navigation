@@ -40,7 +40,8 @@ public class Netz {
 	
 	public void netzUpdate() {
 
-		
+		repoNetzkante.deleteAll();
+		repoNetzkante.deleteAll();
 		
 		int kSize = kanten.size();
 		

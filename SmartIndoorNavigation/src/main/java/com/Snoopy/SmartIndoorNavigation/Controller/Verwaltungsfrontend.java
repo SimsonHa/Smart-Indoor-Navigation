@@ -113,33 +113,21 @@ public class Verwaltungsfrontend {
 	    }
 		//Neuen Artikel + ESL anlegen
 		//@CrossOrigin(origins = "http://localhost:8080")
-	    //@PutMapping("/newArtikel")
-		//public void NewArtikel(@)
+	    //@PostMapping("/newArtikel")
+		//public void NewArtikel(@RequestBody
 	    
 	    //https://www.baeldung.com/spring-request-response-body
 	    //https://stackoverflow.com/questions/30511911/getting-not-supported-media-type-error
-		@CrossOrigin(origins = "http://localhost:9000")
-	    @PostMapping("wegpunkt")
-	    public Wegpunkt wp(@RequestBody Wegpunkt wp) {
-	    	
-	    	repository4.save(wp);
-	    	return wp;
-		}
-		@CrossOrigin(origins = "http://localhost:9000")
-	    @GetMapping("wegpunktAll")
-	    public List<Wegpunkt> wpAll(){
-	    List<Wegpunkt> wp = (List<Wegpunkt>) repository4.findAll();
-	    	return wp;
-		}
+
     	
 		//Kanten speichern 
 		@CrossOrigin(origins = "http://localhost:8080")
 	    @PostMapping("/netz")
 	    public void netz(@RequestBody WrapperNetzArr wrapper) {
 			//Bisheriges Netz löschen
-	    	repository4.deleteAll();
+
 	    	repository6.deleteAll();
-	    	
+	    	repository4.deleteAll();
 	    	int sizeWP = wrapper.getWrapperNetzArr().size();
 	    	
 	    	for(int i =0; i<sizeWP; i++) {
