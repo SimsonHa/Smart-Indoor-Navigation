@@ -38,39 +38,45 @@ public class SmartIndoorNavigationApplication {
 			
 			repository1.save(new Artikel(33L, "Apfel", 2.5, "123", repository2.findByName("Obst")));
 			repository1.save(new Artikel(34L, "Tomate", 5.2, "456", repository2.findByName("Gemüse")));
-			repository1.save(new Artikel(35L, "Kirsche", 4.1, "789", repository2.findByName("Obst")));
+			repository1.save(new Artikel(35L, "Mango", 4.1, "789", repository2.findByName("Obst")));
 			repository1.save(new Artikel(36L, "Bier", 1.1, "444", repository2.findByName("Getränke")));
 			
 
 			
-			Pi p1 =  new Pi("b827eb81d371");
-			p1.setStatus(true);
-			Pi p2 = new Pi("b827eb952596");
-			p2.setStatus(true);
-			Pi p3 = new Pi("000000003d1d1c21");
-			p3.setStatus(true);
+//			Pi p1 =  new Pi("b827eb4f1802");
+//			p1.setStatus(true);
+//			Pi p2 = new Pi("b827eb952596");
+//			p2.setStatus(true);
+//			Pi p3 = new Pi("b827eb81d371");
+//			p3.setStatus(true);
+//			
+//			repository4.save(p1);
+//			repository4.save(p2);
+//			repository4.save(p3);
+//			
+//			ESL esl1 = new ESL(560, 240);
+//			ESL esl2 = new ESL(502, 205.5);
+//			ESL esl3 = new ESL(560, 288);
+//			
+//			esl1.setPi(p1);
+//			esl1.setArtikel(repository1.findByName("Bier"));
+//			esl2.setPi(p2);
+//			esl2.setArtikel(repository1.findByName("Tomate"));
+//			esl3.setPi(p3);
+//			esl3.setArtikel(repository1.findByName("Tomate"));
 			
-			repository4.save(p1);
-			repository4.save(p2);
-			repository4.save(p3);
-			repository4.save(new Pi("000000003d1d1c78"));
-			
-			ESL esl1 = new ESL(560, 240);
-			ESL esl2 = new ESL(502, 205.5);
-			
-			esl1.setPi(p1);
-			esl1.setArtikel(repository1.findByName("Bier"));
-			
-			esl2.setPi(p2);
-			esl2.setArtikel(repository1.findByName("Kirsche"));
 			
 			//repository3.save(new ESL(3.42, 4));
 			//repository3.save(new ESL(3.42, 1.86));
 			//repository3.save(new ESL(3.42, 2.9));
 			//repository3.save(new ESL(3.42, 3.5));
 			//repository3.save(new ESL(3.42, 2.44));
-			repository3.save(esl1);
-			repository3.save(esl2);
+			
+			
+			
+//			repository3.save(esl1);
+//			repository3.save(esl2);
+//			repository3.save(esl3);
 			
 			List<ESL> eslList = (List<ESL>) repository3.findAll();
 			

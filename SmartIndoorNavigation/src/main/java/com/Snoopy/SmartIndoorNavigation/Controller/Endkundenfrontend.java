@@ -60,7 +60,7 @@ public class Endkundenfrontend {
     public ESL artikelPos(@PathVariable String artikelNr) {
 		
 	
-		Artikel a = repoArtikel.findByName(artikelNr);
+		Artikel a = repoArtikel.findByArtNr(artikelNr);
 
 		try {
 			return repoESL.findByArtikel(a);

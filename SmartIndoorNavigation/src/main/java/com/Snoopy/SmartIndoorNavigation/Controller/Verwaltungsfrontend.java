@@ -104,7 +104,7 @@ public class Verwaltungsfrontend {
 	    public void ESLconnect(@RequestBody WrapperESL wrapperESL) {
 			ESL esl = new ESL(wrapperESL.getLabel().getX(), wrapperESL.getLabel().getY());
 			
-			esl.setArtikel(wrapperESL.getArtikel());
+			esl.setArtikel(repository1.findByName(wrapperESL.getArtikel().getName()));
 			esl.setPi(repository2.findByMacAdress(wrapperESL.getLabel().getMac()));
 			
 			repository3.save(esl);
@@ -142,9 +142,7 @@ public class Verwaltungsfrontend {
 			}
 		}
 				
-	    
-	    //https://www.baeldung.com/spring-request-response-body
-	    //https://stackoverflow.com/questions/30511911/getting-not-supported-media-type-error
+	   
 
     	
 		//Kanten speichern 
