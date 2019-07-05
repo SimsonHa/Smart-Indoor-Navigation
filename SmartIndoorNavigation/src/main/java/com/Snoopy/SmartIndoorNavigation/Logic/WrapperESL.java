@@ -4,11 +4,11 @@ import com.Snoopy.SmartIndoorNavigation.Model.Entity.Artikel;
 
 public class WrapperESL {
 	Artikel artikel;
-	Place place;
-	public WrapperESL(Artikel artikel, Place place) {
+	Label label;
+	public WrapperESL(Artikel artikel, Label place) {
 		super();
 		this.artikel = artikel;
-		this.place = place;
+		this.label = label;
 	}
 	
 	public WrapperESL() {
@@ -19,17 +19,21 @@ public class WrapperESL {
 		return artikel;
 	}
 
-	public Place getPlace() {
-		return place;
-	}
+
 
 	public void setArtikel(Artikel artikel) {
 		this.artikel = artikel;
 	}
 
-	public void setPlace(Place place) {
-		this.place = place;
+	public Label getLabel() {
+		return label;
 	}
+
+	public void setLabel(Label label) {
+		this.label = label;
+	}
+
+
 
 
 	

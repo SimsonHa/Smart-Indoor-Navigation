@@ -74,14 +74,15 @@ public class Verwaltungsfrontend {
 	PublishArtikel publishService;
 		
 		//Alle Artikel zurückgeben
-		@CrossOrigin(origins = "http://localhost:4200")
-		@GetMapping("/artikelV")
+		@CrossOrigin(origins =  {"http://localhost:4200", "http://localhost:8082"})
+		@GetMapping("/artikel")
 	    public List<Artikel> artikel() {
 	       List<Artikel> a = (List<Artikel>) repository1.findAll();
 	        return a;
 	    }
-	  
-		@CrossOrigin(origins = "http://localhost:4200")
+		
+		//Alle ESL's zurückgeben
+		@CrossOrigin(origins = {"http://localhost:4200", "http://localhost:8082"})
 	    @GetMapping("/esl")
 	    public List<ESL> esl(){
 	    	List<ESL> esl = (List<ESL>) repository3.findAll();
@@ -95,27 +96,23 @@ public class Verwaltungsfrontend {
 	    	List<Pi> p = (List<Pi>) repository2.findByStatus(true);   	
 	    	return p;
 	    }
-		/*
-		@CrossOrigin(origins = "http://localhost:9000")
-	    @PutMapping("/piConnect/{posX}/{posY}/{macAdress}")
-	    public ESL connect(@PathVariable double posX, @PathVariable double posY, @PathVariable String macAdress) {
-	    	ESL esl = repository3.findByPosition(posX, posY);
-	    	Pi pi = repository2.findByMacAdress(macAdress);
-	    	esl.setPi(pi);
-	    	repository3.save(esl);
-	    	return esl;
-	    }
-		*/
+		
+		
 		//ESL, Artikel und Pi verheiraten
-		/*@CrossOrigin(origins = "http://localhost:8080")
+		@CrossOrigin(origins = "http://localhost:4200")
 	    @PutMapping("/piConnect")
 	    public void ESLconnect(@RequestBody WrapperESL wrapperESL) {
-			ESL esl = repository3.findByPosition(wrapperESL.getTransform().getX(), wrapperESL.getTransform().getY());
+			ESL esl = repository3.findByPosition(wrapperESL.getLabel().getX(), wrapperESL.getLabel().getY());
 			esl.setArtikel(wrapperESL.getArtikel());
-			esl.setPi(repository2.findByMacAdress(wrapperESL.getTransform().getMac()));
+			esl.setPi(repository2.findByMacAdress(wrapperESL.getLabel().getMac()));
 			
 			repository3.save(esl);
-	    }*/
+			
+			//Geänderte Daten an Pi übermitteln
+			List<ESL> eslList = new ArrayList();
+			eslList.add(esl);
+			publishService.publish(eslList);
+	    }
 		//Neuen Artikel anlegen
 		@CrossOrigin(origins = "http://localhost:4200")
 	    @PostMapping("/newArtikel")
@@ -130,6 +127,17 @@ public class Verwaltungsfrontend {
 
 			
 			repository1.save(artikel);
+			
+			//Geänderte Daten an Pi übermitteln
+			try {
+				List <ESL> eslList = new ArrayList();
+				ESL esl = repository3.findByArtikel(artikel);
+				eslList.add(esl);
+				publishService.publish(eslList);
+			}
+			catch(Error e){
+				System.out.println("Der Artikel wurde noch keinem ESL zugeordnet! Keine Nachricht an den Pi veröffentlicht!");
+			}
 		}
 				
 	    

@@ -16,6 +16,8 @@ public class Kategorie {
 	@NotNull
 	@Column(unique = true)
 	private String name;
+	
+	private String imgUrl;
 
 	public Kategorie() {
 		
@@ -39,6 +41,14 @@ public class Kategorie {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public String getImgUrl() {
+		return imgUrl;
+	}
+
+	public void setImgUrl(String imgUrl) {
+		this.imgUrl = imgUrl;
 	}
 	
 	

@@ -35,6 +35,15 @@ public class Artikel {
 		this.kategorie = kategorie;
 	}
 	
+	public Artikel(Long id, String name, double preis, String artNr, Kategorie kategorie) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.preis = preis;
+		this.artNr = artNr;
+		this.kategorie = kategorie;
+	}
+	
 	public String getName() {
 		return name;
 	}

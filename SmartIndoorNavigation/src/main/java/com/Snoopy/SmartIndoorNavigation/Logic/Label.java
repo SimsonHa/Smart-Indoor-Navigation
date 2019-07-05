@@ -1,11 +1,11 @@
 package com.Snoopy.SmartIndoorNavigation.Logic;
 
-public class Place {
+public class Label {
 	long id;
 	String mac;
 	double x;
 	double y;
-	public Place(long id, String mac, double x, double y) {
+	public Label(long id, String mac, double x, double y) {
 		super();
 		this.id = id;
 		this.mac = mac;
@@ -14,7 +14,7 @@ public class Place {
 	}
 	
 	
-	public Place() {
+	public Label() {
 		
 	}
 

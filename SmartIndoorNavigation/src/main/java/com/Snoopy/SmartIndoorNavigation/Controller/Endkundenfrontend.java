@@ -54,26 +54,26 @@ public class Endkundenfrontend {
    
     }
     
+
 	@CrossOrigin(origins = "http://localhost:8082")
-    @GetMapping("/artikelE")
-    public List<Artikel> artikel() {
-       List<Artikel> a = (List<Artikel>) repoArtikel.findAll();
-        return a;
-    }
-	@CrossOrigin(origins = "http://localhost:8082")
-    @GetMapping("/artikelPos/{artikelID}")
-    public ESL artikelPos(@PathVariable long artikelID) {
+    @GetMapping("/artikelPos/{artikelNr}")
+    public ESL artikelPos(@PathVariable String artikelNr) {
 		
-		Optional<Artikel> a = repoArtikel.findById(artikelID);
-		
-		return repoESL.findByArtikel(a);
-    	
+	
+		Artikel a = repoArtikel.findByName(artikelNr);
+
+		try {
+			return repoESL.findByArtikel(a);
+		}
+		catch(Exception e) {
+			System.out.println("Der Artikel hat noch keine Position!");
+		}
+    	return null;
     }
     
     //Bewertung des Artikels über Pfadvariable
     //@PostMapping("/bewertung/{artikelID}/{bewertung}")
     
-    
-    //Punkt des Artikels auf Bild anzeigen!
+
 
 }
