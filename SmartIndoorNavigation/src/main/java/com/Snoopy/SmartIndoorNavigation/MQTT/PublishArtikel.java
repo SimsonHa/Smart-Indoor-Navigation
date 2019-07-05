@@ -63,7 +63,7 @@ public class PublishArtikel {
 	        		content = "{\"macAdress\":\""+esl.get(i).getPi().getMacAdres()+ "\", \"name\":\""+esl.get(i).getArtikel().getName()+"\", \"preis\":\""+esl.get(i).getArtikel().getPreis()+"\", \"kategorie\":\""+esl.get(i).getArtikel().getKategorie().getName()+"\"}" ;
 	        	}
 	        	catch(NullPointerException e) {
-	        		System.out.println("ESL an der Position " + esl.get(i).getPosX()+ " / " + esl.get(i).getPosY() + " ist nicht mit einem Pi verknüpft!");
+	        		System.out.println("ESL ist nicht mit einem Pi verknüpft!");
 	        	}
 	        	
 	        	if(content!= null) {

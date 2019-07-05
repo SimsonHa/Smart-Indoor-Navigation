@@ -100,9 +100,10 @@ public class Verwaltungsfrontend {
 		
 		//ESL, Artikel und Pi verheiraten
 		@CrossOrigin(origins = "http://localhost:4200")
-	    @PutMapping("/piConnect")
+	    @PostMapping("/piConnect")
 	    public void ESLconnect(@RequestBody WrapperESL wrapperESL) {
-			ESL esl = repository3.findByPosition(wrapperESL.getLabel().getX(), wrapperESL.getLabel().getY());
+			ESL esl = new ESL(wrapperESL.getLabel().getX(), wrapperESL.getLabel().getY());
+			
 			esl.setArtikel(wrapperESL.getArtikel());
 			esl.setPi(repository2.findByMacAdress(wrapperESL.getLabel().getMac()));
 			
@@ -117,6 +118,7 @@ public class Verwaltungsfrontend {
 		@CrossOrigin(origins = "http://localhost:4200")
 	    @PostMapping("/newArtikel")
 		public void NewArtikel(@RequestBody Artikel artikel) {
+			
 			try {
 				repository8.findByName(artikel.getKategorie().getName()).getName();
 				artikel.setKategorie(repository8.findByName(artikel.getKategorie().getName()));
@@ -127,7 +129,7 @@ public class Verwaltungsfrontend {
 
 			
 			repository1.save(artikel);
-			
+			System.out.println("Artikel " + artikel.getName()+ " wurde angelegt!");
 			//Geänderte Daten an Pi übermitteln
 			try {
 				List <ESL> eslList = new ArrayList();

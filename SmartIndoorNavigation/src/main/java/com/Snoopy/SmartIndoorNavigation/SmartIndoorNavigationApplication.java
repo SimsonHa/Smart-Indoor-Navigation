@@ -36,10 +36,10 @@ public class SmartIndoorNavigationApplication {
 			repository2.save(new Kategorie("Gemüse"));
 			repository2.save(new Kategorie("Getränke"));
 			
-			repository1.save(new Artikel(1L, "Apfel", 2.5, "123", repository2.findByName("Obst")));
-			repository1.save(new Artikel(2L, "Tomate", 5.2, "456", repository2.findByName("Gemüse")));
-			repository1.save(new Artikel(3L, "Kirsche", 4.1, "789", repository2.findByName("Obst")));
-			repository1.save(new Artikel(4L, "Bier", 1.1, "444", repository2.findByName("Getränke")));
+			repository1.save(new Artikel(33L, "Apfel", 2.5, "123", repository2.findByName("Obst")));
+			repository1.save(new Artikel(34L, "Tomate", 5.2, "456", repository2.findByName("Gemüse")));
+			repository1.save(new Artikel(35L, "Kirsche", 4.1, "789", repository2.findByName("Obst")));
+			repository1.save(new Artikel(36L, "Bier", 1.1, "444", repository2.findByName("Getränke")));
 			
 
 			
