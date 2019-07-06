@@ -109,6 +109,14 @@ public class Verwaltungsfrontend {
 			
 			repository3.save(esl);
 			
+			
+			
+			//Neues Netz mit ESL's erzeugen{
+		    netzService.setEsls(repository3.findAll());
+		    netzService.setKanten(repository6.findAll());
+		    netzService.netzUpdate();
+
+
 			//Geänderte Daten an Pi übermitteln
 			List<ESL> eslList = new ArrayList();
 			eslList.add(esl);

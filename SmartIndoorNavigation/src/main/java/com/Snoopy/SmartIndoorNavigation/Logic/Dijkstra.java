@@ -13,7 +13,7 @@ public class Dijkstra {
 	//Gewicht
 	private double gewicht;
 	//Status
-	private boolean status = true;
+	private boolean status;
 	//Final
 	private boolean finale;
 	
@@ -21,6 +21,7 @@ public class Dijkstra {
 		this.netzpunkt = netzpunkt;
 		this.netzkanten = netzkanten;
 		this.gewicht = gewicht;
+		this.status = true;
 	}
 
 	public Netzpunkt getNetzpunkt() {

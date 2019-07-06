@@ -74,10 +74,10 @@ public class PublishArtikel {
 		            message.setQos(qos);
 		            sampleClient.publish(topic, message);
 		            System.out.println("Message published");
-		            if(eslSize-i<=1) {
-			            sampleClient.disconnect();
-			            System.out.println("Disconnected");
-		            }
+//		            if(eslSize-i<=1) {
+//			            sampleClient.disconnect();
+//			            System.out.println("Disconnected");
+//		            }
 
 		            
 		        } catch(MqttException me) {

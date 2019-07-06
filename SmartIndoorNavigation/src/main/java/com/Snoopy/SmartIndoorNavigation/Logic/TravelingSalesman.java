@@ -26,29 +26,32 @@ public class TravelingSalesman {
 	@Autowired
 	DijkstraWorker worker;
 	
-	List<Artikel> artikel;
-	
+
 	public TravelingSalesman() {
-		
-	}
 	
-	public TravelingSalesman(List<Artikel> artikel) {
-		this.artikel = artikel;
 	}
 	
 	
 	//Greedy
-	public List<Netzkante> path(){
+	public List<Netzkante> path(List<Artikel> artikel){
 		//Dijkstra
-		List<Netzkante> allKanten = (List<Netzkante>) repoNetzkante.findAll();
-		List<Netzpunkt> allPunkte = (List<Netzpunkt>) repoNetzpunkt.findAll();
-		
 		List<Dijkstra> output = new ArrayList();
 		
 		List<Artikel> artikelTemp = artikel;
+		System.out.println("Anzahl der gesuchten Artikel: " + artikel.size());
+		
+		int artSize = artikel.size();
+		
 		//Schleife so oft durchlaufen wie viele Artikel gesucht werden
-		for(int x = 0; x<artikel.size(); x++) {
+		for(int x = 0; x<artSize; x++) {
+			
 			Dijkstra shortest = new Dijkstra(null, null, 999999999);
+			
+			
+			for(int v =0; v<artikelTemp.size();v++) {
+				System.out.println("ArtikelTemp: "+artikelTemp.get(v));
+			}
+			
 			//Schleife mit Artikel die noch nicht besucht wurden
 			for(int m = 0; m<artikelTemp.size(); m++) {
 				//In der ersten Runde vom Anfang starten
@@ -65,18 +68,18 @@ public class TravelingSalesman {
 					}
 				}
 			}
+			System.out.println("Artikel " + shortest.getNetzpunkt().getArtikel().getName() + " gefunden.");
 			output.add(shortest);
 			artikelTemp.remove(shortest.getNetzpunkt().getArtikel());
 			
+			
+			System.out.println("OutputSize: " + output.size());
+			System.out.println("ArtikelSize: " + artSize);
 
-			//Zum Schluss noch zur Kasse navigieren
-			//Keine Ahnung warum artikel.size()+1 eigentlich müsste size gleich groß sein
-			if(output.size() == artikel.size()+1) {
-				//Vom letzten Artikel zur Kasse navigieren
-				shortest = worker.work(output.get(output.size()-1).getNetzpunkt(), repoNetzpunkt.findByStatus("ende"));
-				output.add(shortest);
-			}
 		}
+		//Vom letzten Artikel zur Kasse navigieren
+		Dijkstra shortest = worker.work(output.get(output.size()-1).getNetzpunkt(), repoNetzpunkt.findByStatus("ende"));
+		output.add(shortest);
 		
 		List<Netzkante> output2 = new ArrayList();
 		
@@ -97,13 +100,7 @@ public class TravelingSalesman {
 		return Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
 	}
 	*/
-	public List<Artikel> getArtikel() {
-		return artikel;
-	}
 
-	public void setArtikel(List<Artikel> artikel) {
-		this.artikel = artikel;
-	}
 	
 	
 	

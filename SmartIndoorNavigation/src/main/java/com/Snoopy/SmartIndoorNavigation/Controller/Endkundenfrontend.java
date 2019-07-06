@@ -49,8 +49,7 @@ public class Endkundenfrontend {
 			Artikel a = repoArtikel.findByArtNr(artikelNr.getArtNr().get(i));
 			aL.add(a);
 		}
-    	service.setArtikel(aL);
-    	return service.path();
+    	return service.path(aL);
    
     }
     

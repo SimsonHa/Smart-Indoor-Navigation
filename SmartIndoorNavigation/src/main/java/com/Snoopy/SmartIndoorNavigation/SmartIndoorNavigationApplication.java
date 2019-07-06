@@ -43,16 +43,16 @@ public class SmartIndoorNavigationApplication {
 			
 
 			
-//			Pi p1 =  new Pi("b827eb4f1802");
-//			p1.setStatus(true);
-//			Pi p2 = new Pi("b827eb952596");
-//			p2.setStatus(true);
-//			Pi p3 = new Pi("b827eb81d371");
-//			p3.setStatus(true);
-//			
-//			repository4.save(p1);
-//			repository4.save(p2);
-//			repository4.save(p3);
+			Pi p1 =  new Pi("b827eb4f1802");
+			p1.setStatus(true);
+			Pi p2 = new Pi("b827eb952596");
+			p2.setStatus(true);
+			Pi p3 = new Pi("b827eb81d371");
+			p3.setStatus(true);
+			
+			repository4.save(p1);
+			repository4.save(p2);
+			repository4.save(p3);
 //			
 //			ESL esl1 = new ESL(560, 240);
 //			ESL esl2 = new ESL(502, 205.5);
@@ -78,13 +78,13 @@ public class SmartIndoorNavigationApplication {
 //			repository3.save(esl2);
 //			repository3.save(esl3);
 			
-			List<ESL> eslList = (List<ESL>) repository3.findAll();
+//			List<ESL> eslList = (List<ESL>) repository3.findAll();
 			
 			//Mit Mqtt Broker verbinden
 			subscribeService.subscribe();
 			
 			//Send Artikel für jedes existente ESL Etikett
-			publishService.publish(eslList);
+//			publishService.publish(eslList);
 		};
 	}	
 }

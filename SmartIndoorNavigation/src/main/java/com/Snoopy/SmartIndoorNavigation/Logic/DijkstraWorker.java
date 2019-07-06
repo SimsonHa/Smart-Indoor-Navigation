@@ -7,8 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.Snoopy.SmartIndoorNavigation.Model.Entity.Artikel;
+import com.Snoopy.SmartIndoorNavigation.Model.Entity.ESL;
 import com.Snoopy.SmartIndoorNavigation.Model.Entity.Netzkante;
 import com.Snoopy.SmartIndoorNavigation.Model.Entity.Netzpunkt;
+import com.Snoopy.SmartIndoorNavigation.Model.Repository.ESLRepository;
 import com.Snoopy.SmartIndoorNavigation.Model.Repository.NetzkanteRepository;
 import com.Snoopy.SmartIndoorNavigation.Model.Repository.NetzpunktRepository;
 
@@ -19,18 +21,17 @@ public class DijkstraWorker {
 	NetzkanteRepository repoNetzkante;
 	@Autowired
 	NetzpunktRepository repoNetzpunkt;
+	@Autowired
+	ESLRepository repoESL;
 	
 	
 	List<Netzkante> allKanten;
 	List<Netzpunkt> allPunkte;
 	
+
 	
-	Netzpunkt start;
-	Netzpunkt search;
 	
 	public Dijkstra work (Netzpunkt start, Netzpunkt search) {
-		this.start = start;
-		this.search = search;
 		allKanten = (List<Netzkante>) repoNetzkante.findAll();
 		allPunkte = (List<Netzpunkt>) repoNetzpunkt.findAll();
 		
@@ -38,14 +39,18 @@ public class DijkstraWorker {
 		List<Dijkstra> reach = new ArrayList();
 		//List<Dijkstra> output = new ArrayList();
 		
+
+		
 		//Schleife um alle Punkte zu besuchen
 		while(true) {
+
 			//In der ersten Runde den Startpunkt markieren
 			if(reach.isEmpty()) {
 				//Aktuell betrachteter Knoten
 				Dijkstra curNode = new Dijkstra(start, null, 0);
 				//Der aktuelle Knoten soll später nicht mehr betrachtet werden
 				curNode.setStatus(false);
+				reach.add(curNode);
 				//Verknüpfte Wege finden
 				List<Netzkante> netzKConnected = this.findConnected(curNode.getNetzpunkt());
 				
@@ -59,6 +64,9 @@ public class DijkstraWorker {
 					else {
 						reach.add(new Dijkstra(netzKConnected.get(j).getNetzPunkte().get(0), netzKConnectedAdd ,netzKConnected.get(j).distance()));
 					}
+//					System.out.println("Aktueller Knoten: (" + curNode.getNetzpunkt().getPosX() + "/" + curNode.getNetzpunkt().getPosY() +")");
+//					System.out.println("ReachSize: " +reach.size());
+					
 				}
 				
 			}
@@ -74,12 +82,14 @@ public class DijkstraWorker {
 						index = j;
 					}
 				}
-				//Aktueller nähster Punkt
+				//Aktueller Punkt
 				Dijkstra curNode = reach.get(index);
+				//Testing
+
 				//Der aktuelle Knoten soll später nicht mehr betrachtet werden
-				curNode.setStatus(false);
+				//reach.get(index).setStatus(false);
 				
-				//Check ob wir am Ziel sind? Abbrechen der For-Schleife !
+				//Check ob wir am Ziel sind? Abbrechen der While-Schleife !
 				if(curNode.getNetzpunkt().equals(search)) {
 					//reach.get(reach.indexOf(curNode)).setFinale(true);
 					return curNode;
@@ -123,12 +133,48 @@ public class DijkstraWorker {
 						addNK.addAll(curNode.getNetzkanten());
 						addNK.add(netzKConnected.get(k));
 						reach.add(new Dijkstra(netzPConnected.get(k), addNK, netzKConnected.get(k).distance()));
-					}	
+					}
+				}
+				
+				boolean del1 = true;
+				for(int k =0; k<netzPConnected.size();k++) {
+					boolean del2 = false;
+					for(int t =0; t<reach.size(); t++) {
+						if(reach.get(t).getNetzpunkt().equals(netzPConnected.get(k))) {
+							del2 = true;
+						}
+					}
+					if(!del2) {
+						del1 = false;
+					}
+				}
+				
+				if(del1) {
+					//Der aktuelle Knoten soll später nicht mehr betrachtet werden
+					reach.get(index).setStatus(false);
 				}
 
+				
+				
+				
+//					System.out.println("Aktueller Knoten: (" + curNode.getNetzpunkt().getPosX() + "/" + curNode.getNetzpunkt().getPosY() +")" );
+//					System.out.println("ReachSize: " +reach.size());
+//					for(int b =0; b<reach.size(); b++) {
+//						try {
+//							System.out.println("Reach" + b +": " + reach.get(b).getNetzpunkt().getPosX() + "/" + reach.get(b).getNetzpunkt().getPosY() + ", Gewicht: " + reach.get(b).getGewicht() + ", Status: " + reach.get(b).isStatus()+", Artikel: " +reach.get(b).getNetzpunkt().getArtikel().getName());
+//						}
+//						catch(Exception e) {
+//							
+//						}
+//							System.out.println("Reach" + b +": " + reach.get(b).getNetzpunkt().getPosX() + "/" + reach.get(b).getNetzpunkt().getPosY() + ", Gewicht: " + reach.get(b).getGewicht() + ", Status: " + reach.get(b).isStatus());
+//					}
+
+
+
 			}
-			
 		}
+		
+	
 		
 	
 	}
