@@ -83,7 +83,7 @@ public class SmartIndoorNavigationApplication {
 			//Mit Mqtt Broker verbinden
 			subscribeService.subscribe();
 			
-			//Send Artikel für jedes existente ESL Etikett
+//			Send Artikel für jedes existente ESL Etikett
 //			publishService.publish(eslList);
 		};
 	}	

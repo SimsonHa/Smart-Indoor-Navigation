@@ -1,5 +1,6 @@
 package com.Snoopy.SmartIndoorNavigation.MQTT;
 
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 import org.eclipse.paho.client.mqttv3.MqttClient;
@@ -70,7 +71,7 @@ public class PublishArtikel {
 		        try {
 
 		            System.out.println("Publishing message: "+content);
-		            MqttMessage message = new MqttMessage(content.getBytes());
+		            MqttMessage message = new MqttMessage(content.getBytes(StandardCharsets.UTF_8));
 		            message.setQos(qos);
 		            sampleClient.publish(topic, message);
 		            System.out.println("Message published");
